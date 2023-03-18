@@ -1,10 +1,23 @@
+import Concert from "@/components/Concert";
 import FilterCard from "@/components/FilterCard";
 import HeaderBar from "@/components/HeaderBar";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
 function Concerts() {
-   
+    const [screenWidth, setScreenWidth] = useState(0);
+
+    useEffect(() => {
+        function handleResize() {
+            setScreenWidth(window.innerWidth);
+        }
+        window.addEventListener("resize", handleResize);
+        handleResize();
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, [setScreenWidth]);
+
     return (
         <>
             <Head>
@@ -18,16 +31,18 @@ function Concerts() {
                 <div className="flex items-center justify-center mt-[300px]">
                     <div className="absolute h-[700px] top-0 bottom-0 right-0 left-0 bg-black/40 z-0 " />
                     <div className="z-10">
-                        <h1 className="font-bold text-center text-[40px] text-white mt-[-85px]">Concerts</h1>
+                        <h1 className="font-bold text-center text-[50px] text-white mt-[-85px]">Concerts</h1>
                         <div className="scroll-downs">
-                            <div className="mousey">
+                            <div className="absolute mousey mt-[40px]">
                                 <div className="scroller"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <FilterCard/>
-                
+                <FilterCard screenWidth={screenWidth} />
+                <div className="mt-8 p-4 flex justify-center items-center">
+                    <Concert screenWidth={screenWidth} />
+                </div>
             </div>
         </>
     );

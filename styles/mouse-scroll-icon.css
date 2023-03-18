@@ -1,12 +1,10 @@
 
   .scroll-downs {
-    position: absolute;
     top: 0;
     right: 0;
-    bottom: 0;
+    bottom: ;
     left: 0;
     margin: auto;
-    
     width :34px;
     height: 55px;
   }
