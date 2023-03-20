@@ -29,10 +29,10 @@ function Concerts({screenWidth}) {
                         </div>
                     </div>
                 </div>
-                <div data-aos="fade-up">
+                <div data-aos="fade-up" data-aos-offset="200" data-aos-once="false">
                     <FilterCard screenWidth={screenWidth} />
                 </div>
-                <div className="mt-8 p-4 flex justify-center items-center">
+                <div className="mt-8 p-4 flex justify-center items-center" data-aos="fade-up" data-aos-offset="200" data-aos-once="false">
                     <Concert screenWidth={screenWidth} />
                 </div>
             </div>
