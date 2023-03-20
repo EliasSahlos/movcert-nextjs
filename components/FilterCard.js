@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 
 function FilterCard({screenWidth}) {
     
@@ -34,10 +33,10 @@ function FilterCard({screenWidth}) {
                             type="text"
                             name="Search"
                             id="cTitle"
-                            className=" border-2 border-[##ced4da] h-[50px] p-2 w-full outline-none rounded shadow-sm focus:border-[#f3c07a] "
+                            className="border-2 border-[##ced4da] h-[50px] p-2 w-full outline-none rounded shadow-sm focus:border-[#f3c07a] "
                         />
-                        <div className="flex justify-center items-center mt-4">
-                            <button className=" bg-[#ffba5a] text-white w-[120px] h-[50px] rounded-full ">Set Filters </button>
+                        <div className="flex justify-center items-center mt-6">
+                            <button className=" bg-[#ffba5a] text-white w-[120px] h-[50px] rounded-full shadow-md ">Set Filters </button>
                         </div>
                     </div>
                 </div>
@@ -80,7 +79,7 @@ function FilterCard({screenWidth}) {
                 </div>
             ) : (
                 <div className="flex justify-center items-center">
-                    <div className=" block w-[1000px] p-8 mt-[150px] border rounded-lg shadow-md bg-white z-10 grid grid-cols-8 gap-4 w-[800px]">
+                    <div className=" block w-[1200px] p-8 mt-[150px] border rounded-lg shadow-md bg-white z-10 grid grid-cols-8 gap-4 w-[800px]">
                         <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Concert Title</p>
                         <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Music Genre</p>
                         <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Price - Low</p>

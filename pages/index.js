@@ -1,10 +1,13 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import HeaderBar from "@/components/HeaderBar";
+import Navbar from "@/components/HeaderBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({screenWidth}) {
+
+    console.log(screenWidth);
     return (
         <>
             <Head>
@@ -13,14 +16,17 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            
             <div className="h-screen bg-cover custom-img">
-                <HeaderBar />
-
-                <div className="flex items-center justify-center mt-[300px]">
-                    <div className="absolute top-0 bottom-0 right-0 left-0 bg-black/40 z-0 " />
-                    <div className="z-10 ">
-                        <h1 className="font-bold text-center text-[65px] text-white mr-[10px]">Movcert</h1>
-                        <p className="uppercase text-center text-[15px] tracking-[8px] text-white">Tickets Lightning Fast</p>
+                <div className="flex items-center justify-center">
+                    <div className="absolute top-0 bottom-0 right-0 left-0 bg-black/40" />
+                    <div>
+                        <h1 className="font-bold text-center text-[65px] text-white mr-[10px] mt-[90%]" data-aos="fade-up">
+                            Movcert
+                        </h1>
+                        <p className="uppercase text-center text-[15px] tracking-[8px] text-white" data-aos="fade-up">
+                            Tickets Lightning Fast
+                        </p>
                     </div>
                 </div>
             </div>

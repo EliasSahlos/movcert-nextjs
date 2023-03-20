@@ -1,23 +1,12 @@
 import Concert from "@/components/Concert";
 import FilterCard from "@/components/FilterCard";
-import HeaderBar from "@/components/HeaderBar";
+import Navbar from "@/components/HeaderBar";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
-function Concerts() {
-    const [screenWidth, setScreenWidth] = useState(0);
+function Concerts({screenWidth}) {
 
-    useEffect(() => {
-        function handleResize() {
-            setScreenWidth(window.innerWidth);
-        }
-        window.addEventListener("resize", handleResize);
-        handleResize();
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, [setScreenWidth]);
-
+    console.log(screenWidth);
     return (
         <>
             <Head>
@@ -26,20 +15,23 @@ function Concerts() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="h-[700px] bg-cover custom-img">
-                <HeaderBar />
-                <div className="flex items-center justify-center mt-[300px]">
+            <div className="h-[700px] bg-cover custom-img " data-aos="fade">
+                <div className="flex items-center justify-center">
                     <div className="absolute h-[700px] top-0 bottom-0 right-0 left-0 bg-black/40 z-0 " />
-                    <div className="z-10">
-                        <h1 className="font-bold text-center text-[50px] text-white mt-[-85px]">Concerts</h1>
-                        <div className="scroll-downs">
+                    <div className="z-10 mt-[320px]">
+                        <h1 className="font-bold text-center text-[50px] text-white mt-[-85px]" data-aos="fade">
+                            Concerts
+                        </h1>
+                        <div className="scroll-downs" data-aos="fade-up">
                             <div className="absolute mousey mt-[40px]">
                                 <div className="scroller"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <FilterCard screenWidth={screenWidth} />
+                <div data-aos="fade-up">
+                    <FilterCard screenWidth={screenWidth} />
+                </div>
                 <div className="mt-8 p-4 flex justify-center items-center">
                     <Concert screenWidth={screenWidth} />
                 </div>
@@ -48,4 +40,5 @@ function Concerts() {
     );
 }
 
+Concerts.theme = "light";
 export default Concerts;
