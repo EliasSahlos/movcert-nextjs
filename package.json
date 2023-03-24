@@ -1,35 +1,39 @@
 {
-  "name": "movcert-nextjs",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@headlessui/react": "^1.7.13",
-    "@mui/icons-material": "^5.11.11",
-    "@mui/material": "^5.11.12",
-    "@mui/styled-engine-sc": "^5.11.11",
-    "@nextui-org/react": "^1.0.0-beta.12",
-    "aos": "^2.3.4",
-    "eslint": "8.36.0",
-    "eslint-config-next": "13.2.4",
-    "hamburger-react": "^2.5.0",
-    "next": "13.2.4",
-    "next-themes": "^0.2.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-icons": "^4.8.0",
-    "styled-components": "^5.3.8"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.7"
-  }
+    "homepage": "http://EliasSahlos.github.io/movcert-nextjs",
+    "name": "movcert-nextjs",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.10.6",
+        "@emotion/styled": "^11.10.6",
+        "@headlessui/react": "^1.7.13",
+        "@mui/icons-material": "^5.11.11",
+        "@mui/material": "^5.11.12",
+        "@mui/styled-engine-sc": "^5.11.11",
+        "@nextui-org/react": "^1.0.0-beta.12",
+        "aos": "^2.3.4",
+        "axios": "^1.3.4",
+        "eslint": "8.36.0",
+        "eslint-config-next": "13.2.4",
+        "firebase": "^9.18.0",
+        "hamburger-react": "^2.5.0",
+        "next": "13.2.4",
+        "next-themes": "^0.2.1",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-icons": "^4.8.0",
+        "styled-components": "^5.3.8"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.14",
+        "gh-pages": "^5.0.0",
+        "postcss": "^8.4.21",
+        "tailwindcss": "^3.2.7"
+    }
 }

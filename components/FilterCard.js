@@ -1,7 +1,7 @@
 
 function FilterCard({screenWidth}) {
     
-    console.log(screenWidth);
+    
     return (
         <>
             {screenWidth < 768 ? (

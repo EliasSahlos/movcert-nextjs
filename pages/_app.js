@@ -8,7 +8,7 @@ import { ThemeProvider, useTheme } from "next-themes";
 
 export default function App({ Component, pageProps }) {
     const { theme, setTheme } = useTheme();
-    const [screenWidth, setScreenWidth] = useState(0)
+    const [screenWidth, setScreenWidth] = useState(0);
 
     useEffect(() => {
         AOS.init({
@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }) {
             offset: 50,
             duration: 600,
         });
-        
+
         function handleResize() {
             setScreenWidth(window.innerWidth);
         }
@@ -26,14 +26,15 @@ export default function App({ Component, pageProps }) {
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-
     }, []);
     return (
         <>
-            <ThemeProvider forcedTheme={Component.theme || null}>
-                <HeaderBar />
-                <Component {...pageProps} screenWidth={screenWidth} />
-            </ThemeProvider>
+            
+                <ThemeProvider forcedTheme={Component.theme || null}>
+                    <HeaderBar />
+                    <Component {...pageProps} screenWidth={screenWidth} />
+                </ThemeProvider>
+            
         </>
     );
 }

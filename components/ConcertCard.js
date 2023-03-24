@@ -2,12 +2,34 @@ import Image from "next/image";
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
 
-function Concert({ screenWidth }) {
-    
+function ConcertCard({ screenWidth, concertsData }) {
+    console.log(concertsData);
     return (
         <>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 gap-4 lg:gap-6">
-                <div>
+                {concertsData.map((concert) => (
+                    <div key={concert.id}>
+                        <div className="mb-2">
+                            <Image
+                                src={concert.concertImage}
+                                width={400}
+                                height={20}
+                                alt="broken-img"
+                                className="rounded h-auto max-w-full shadow-xl"
+                            />
+                            <h1 className="text-center mt-2">{concert.title}</h1>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </>
+    );
+}
+
+export default ConcertCard;
+
+{
+    /* <div className="mb-2">
                     <Image
                         src="https://static.wikia.nocookie.net/edsheeran/images/9/99/3rd_album.jpg/revision/latest?cb=20170117201309"
                         width={400}
@@ -27,7 +49,7 @@ function Concert({ screenWidth }) {
                     />
                     <h1 className="text-center mt-2">Taylor Swift : Midnight Tour</h1>
                 </div>
-                <div >
+                <div>
                     <Image
                         src="https://static.wikia.nocookie.net/arianagrande/images/4/43/Positions_%E2%80%93_Limited_Edition_Cover_2.jpg"
                         width={400}
@@ -45,7 +67,7 @@ function Concert({ screenWidth }) {
                         alt="broken-img"
                         className="rounded h-auto max-w-full shadow-xl"
                     />
-                       <h1 className="text-center mt-2">The Weeknd : Starboy Tour</h1>
+                    <h1 className="text-center mt-2">The Weeknd : Starboy Tour</h1>
                 </div>
                 <div>
                     <Image
@@ -55,7 +77,7 @@ function Concert({ screenWidth }) {
                         alt="broken-img"
                         className="rounded h-auto max-w-full shadow-xl"
                     />
-                       <h1 className="text-center mt-2">Eminem : Recovery Tour</h1>
+                    <h1 className="text-center mt-2">Eminem : Recovery Tour</h1>
                 </div>
                 <div>
                     <Image
@@ -65,7 +87,7 @@ function Concert({ screenWidth }) {
                         alt="broken-img"
                         className="rounded h-auto max-w-full shadow-xl"
                     />
-                       <h1 className="text-center mt-2">Madonna : MDNA Tour</h1>
+                    <h1 className="text-center mt-2">Madonna : MDNA Tour</h1>
                 </div>
                 <div>
                     <Image
@@ -85,11 +107,6 @@ function Concert({ screenWidth }) {
                         alt="broken-img"
                         className="rounded h-auto max-w-full shadow-xl"
                     />
-                     <h1 className="text-center mt-2">Metallica : Reload Tour</h1>
-                </div>
-            </div>
-        </>
-    );
+                    <h1 className="text-center mt-2">Metallica : Reload Tour</h1>
+    </div> */
 }
-
-export default Concert;

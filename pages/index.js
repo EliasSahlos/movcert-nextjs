@@ -21,10 +21,10 @@ export default function Home({screenWidth}) {
                 <div className="flex items-center justify-center">
                     <div className="absolute top-0 bottom-0 right-0 left-0 bg-black/40" />
                     <div>
-                        <h1 className="font-bold text-center text-[65px] text-white mr-[10px] mt-[90%]" data-aos="fade-up">
+                        <h1 className="text-[55px] font-bold text-center  text-white mr-[10px] mt-[90%] md:text-[65px]" data-aos="fade-up">
                             Movcert
                         </h1>
-                        <p className="uppercase text-center text-[15px] tracking-[8px] text-white" data-aos="fade-up">
+                        <p className="uppercase text-center text-[10px] tracking-[8px] md:text-[15px] text-white" data-aos="fade-up">
                             Tickets Lightning Fast
                         </p>
                     </div>
