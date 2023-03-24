@@ -3,7 +3,7 @@ import FilterCard from "@/components/FilterCard";
 import Head from "next/head";
 import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "../firebase";
+import {db} from "../../firebase/firebase"
 
 function Concerts({ screenWidth }) {
     const [concerts, setConcerts] = useState([]);
