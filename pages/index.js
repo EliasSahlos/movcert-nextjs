@@ -19,7 +19,7 @@ export default function Home({screenWidth}) {
             
             <div className="h-screen bg-cover custom-img">
                 <div className="flex items-center justify-center">
-                    <div className="absolute top-0 bottom-0 right-0 left-0 bg-black/40" />
+                    <div className="absolute top-0 bottom-0 right-0 left-0 bg-black/40 h-screen" />
                     <div>
                         <h1 className="text-[55px] font-bold text-center  text-white mr-[10px] mt-[90%] md:text-[65px]" data-aos="fade-up">
                             Movcert
