@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Transition } from "@headlessui/react";
 
 function ConcertCard({ screenWidth, concertsData }) {
-    console.log(concertsData);
+    
     return (
         <>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 gap-4 lg:gap-6">

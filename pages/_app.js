@@ -5,10 +5,16 @@ import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { ThemeProvider, useTheme } from "next-themes";
+import { AuthContextProvider } from "@/context/AuthContext";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
     const { theme, setTheme } = useTheme();
     const [screenWidth, setScreenWidth] = useState(0);
+
+    const noAuthRequired = ["/", "/login", "/register", "/concerts"];
+    const router = useRouter();
 
     useEffect(() => {
         AOS.init({
@@ -29,12 +35,20 @@ export default function App({ Component, pageProps }) {
     }, []);
     return (
         <>
-            
-                <ThemeProvider forcedTheme={Component.theme || null}>
-                    <HeaderBar />
-                    <Component {...pageProps} screenWidth={screenWidth} />
-                </ThemeProvider>
-            
+            <AuthContextProvider>
+                <HeaderBar />
+                {noAuthRequired.includes(router.pathname) ? (
+                    <>
+                        <Component {...pageProps} screenWidth={screenWidth} />
+                    </>
+                ) : (
+                    <>
+                        <ProtectedRoute>
+                            <Component {...pageProps} screenWidth={screenWidth} />
+                        </ProtectedRoute>
+                    </>
+                )}
+            </AuthContextProvider>
         </>
     );
 }
