@@ -5,6 +5,6 @@ const nextConfig = {
 
 module.exports = {
     images: {
-        domains: ['static.wikia.nocookie.net']
+        domains: ['static.wikia.nocookie.net']['i.pinimg.com'],
     }
 }
