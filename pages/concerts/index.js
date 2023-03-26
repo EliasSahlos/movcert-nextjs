@@ -5,8 +5,8 @@ import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase/firebase";
 
-function Concerts({ screenWidth }) {
-    const [concerts, setConcerts] = useState([]);
+function Concerts({ screenWidth}) {
+    const [concerts,setConcerts] = useState([])
 
     useEffect(() => {
         async function getConcertData() {
@@ -15,7 +15,6 @@ function Concerts({ screenWidth }) {
         }
         getConcertData();
     }, []);
-
     return (
         <>
             <Head>

@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
+import Link from "next/link";
 
 function ConcertCard({ screenWidth, concertsData }) {
+    
     
     return (
         <>
@@ -10,6 +12,7 @@ function ConcertCard({ screenWidth, concertsData }) {
                 {concertsData.map((concert) => (
                     <div key={concert.id}>
                         <div className="mb-2">
+                            <Link href={'/concerts/' + concert.id}>
                             <Image
                                 src={concert.concertCover}
                                 width={400}
@@ -18,6 +21,7 @@ function ConcertCard({ screenWidth, concertsData }) {
                                 className="rounded h-auto max-w-full shadow-xl"
                             />
                             <h1 className="text-center mt-2">{concert.title}</h1>
+                            </Link>
                         </div>
                     </div>
                 ))}

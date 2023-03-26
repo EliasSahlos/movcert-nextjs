@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }) {
     const { theme, setTheme } = useTheme();
     const [screenWidth, setScreenWidth] = useState(0);
 
-    const noAuthRequired = ["/", "/login", "/register", "/concerts"];
+    const AuthRequired = ["/account"];
     const router = useRouter();
 
     useEffect(() => {
@@ -37,15 +37,15 @@ export default function App({ Component, pageProps }) {
         <>
             <AuthContextProvider>
                 <HeaderBar />
-                {noAuthRequired.includes(router.pathname) ? (
-                    <>
-                        <Component {...pageProps} screenWidth={screenWidth} />
-                    </>
-                ) : (
+                {AuthRequired.includes(router.pathname) ? (
                     <>
                         <ProtectedRoute>
                             <Component {...pageProps} screenWidth={screenWidth} />
                         </ProtectedRoute>
+                    </>
+                ) : (
+                    <>
+                        <Component {...pageProps} screenWidth={screenWidth} />
                     </>
                 )}
             </AuthContextProvider>
