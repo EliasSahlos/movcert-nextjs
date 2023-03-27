@@ -18,7 +18,7 @@ function ConcertCard({ screenWidth, concertsData }) {
                                 width={400}
                                 height={20}
                                 alt="broken-img"
-                                className="rounded h-auto max-w-full shadow-xl"
+                                className="rounded h-auto max-w-full shadow-xl scale-100 hover:scale-105 ease-in duration-100"
                             />
                             <h1 className="text-center mt-2">{concert.title}</h1>
                             </Link>

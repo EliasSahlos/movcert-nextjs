@@ -58,7 +58,7 @@ function SpecificConcert({ id }) {
                 <div className="mt-8 p-4">
                     <ConcertInfo concertData={concertData}/>
                 </div>
-            </div>
+            </div>`
         </>
     );
 }
