@@ -5,7 +5,7 @@ import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase/firebase";
 
-function Concerts({ screenWidth}) {
+function Concerts({screenWidth}) {
     const [concerts,setConcerts] = useState([])
 
     useEffect(() => {
@@ -24,12 +24,12 @@ function Concerts({ screenWidth}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className="h-[700px] bg-cover custom-img " data-aos="fade">
+            <div className="h-[700px] bg-cover bg-fixed custom-img " data-aos="fade">
                 <div className="flex items-center justify-center">
                     <div className="absolute top-0 bottom-0 right-0 left-0 bg-gradient-to-b from-black h-[140px]" />
                     <div className="absolute h-[700px] top-0 bottom-0 right-0 left-0 bg-black/40 z-0 " />
                     <div className="z-10 mt-[320px]">
-                        <h1 className="font-bold text-center text-[50px] text-white mt-[-85px]" data-aos="fade">
+                        <h1 className="font-bold text-center text-[50px] text-white mt-[-85px]" data-aos="fade-up">
                             Concerts
                         </h1>
                         <div className="scroll-downs" data-aos="fade-up">
