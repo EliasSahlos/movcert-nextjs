@@ -45,7 +45,7 @@ function SpecificConcert({ id }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="bg-cover bg-center h-[700px]" style={{ backgroundImage: `url(${concertData.concertImage})` }} data-aos="fade">
+            <div className="bg-cover bg-center h-[700px] w-screen" style={{ backgroundImage: `url(${concertData.concertImage})` }} data-aos="fade">
                 <div className="absolute top-0 bottom-0 right-0 left-0 bg-gradient-to-b from-black h-[140px]" />
                 <div className="absolute h-[700px] top-0 bottom-0 right-0 left-0 bg-black/40 z-0 " />
                 <div className="flex justify-center items-center text-black">
