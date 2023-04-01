@@ -1,11 +1,8 @@
 import Link from "next/link";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
 import { Fade as Hamburger } from "hamburger-react";
 import { useEffect, useState } from "react";
 import { UserAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
-import ProtectedRoute from "./ProtectedRoute";
 
 function HeaderBar() {
     const [hamburgerMenu, setHamburgerMenu] = useState(false);
@@ -44,7 +41,7 @@ function HeaderBar() {
             console.log(error);
         }
     }
-
+    
     return (
         <div style={{ backgroundColor: `${color}` }} className="fixed left-0 top-0 w-full ease-in duration-300 z-[1] h-[90px]">
             <div className="max-w-[1240px] m-auto flex justify-between items-center p-8 text-white md:p-6">
@@ -79,7 +76,7 @@ function HeaderBar() {
                             <li className="p-2 text-[20px]">
                                 <Link href="/login">Login</Link>
                             </li>
-                            <li className="p-2 text-[20px] bg-[#ffba5a] px-6 rounded-lg text-black ">
+                            <li className="cursor-pointer p-2 text-[20px] bg-[#ffba5a] px-6 rounded-lg text-black ">
                                 <Link href="/register">Register</Link>
                             </li>
                         </>

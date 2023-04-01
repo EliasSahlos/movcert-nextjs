@@ -4,9 +4,12 @@ import Head from "next/head";
 import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase/firebase";
+import { UserAuth } from "@/context/AuthContext";
 
 function Concerts({screenWidth}) {
     const [concerts,setConcerts] = useState([])
+
+    const user = UserAuth()
 
     useEffect(() => {
         async function getConcertData() {
@@ -15,6 +18,8 @@ function Concerts({screenWidth}) {
         }
         getConcertData();
     }, []);
+
+    console.log(user);
     return (
         <>
             <Head>

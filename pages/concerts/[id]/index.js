@@ -5,6 +5,7 @@ import { db } from "../../../firebase/firebase";
 import Head from "next/head";
 import Image from "next/image";
 import ConcertInfo from "@/components/ConcertInfo";
+import { UserAuth } from "@/context/AuthContext";
 
 export async function getServerSideProps(router) {
     const idObj = router.query;
@@ -21,6 +22,8 @@ function SpecificConcert({ id }) {
     const [screenWidth, setScreenWidth] = useState(0);
     const [concertData, setConcertData] = useState([]);
     const router = useRouter();
+    
+    const user = UserAuth()
 
     useEffect(() => {
         // GET concert info by ID from firebase
@@ -36,7 +39,7 @@ function SpecificConcert({ id }) {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
-    console.log(concertData.concertImage);
+    
     return (
         <>
             <Head>
@@ -56,7 +59,7 @@ function SpecificConcert({ id }) {
                     </div>
                 </div>
                 <div className="mt-8 p-4">
-                    <ConcertInfo concertData={concertData}/>
+                    <ConcertInfo concertData={concertData} concertID={id}/>
                 </div>
             </div>`
         </>
