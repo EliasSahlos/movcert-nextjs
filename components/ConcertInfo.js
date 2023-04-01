@@ -5,13 +5,15 @@ import EmptyHeartIcon from "@mui/icons-material/FavoriteBorder";
 import FilledHeartIcon from "@mui/icons-material/Favorite";
 import { useEffect, useState } from "react";
 import { UserAuth } from "@/context/AuthContext";
-import { arrayUnion, updateDoc, doc, onSnapshot, getDoc } from "firebase/firestore";
+import { arrayUnion, updateDoc, doc, onSnapshot, getDoc, arrayRemove, deleteDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
 function ConcertInfo({ concertData, concertID }) {
     const [screenWidth, setScreenWidth] = useState(0);
     const [saveIcon, setSaveIcon] = useState(false);
+    const [idFilter, setIdFilter] = useState([]);
+
     const { user } = UserAuth();
 
     useEffect(() => {
@@ -25,8 +27,8 @@ function ConcertInfo({ concertData, concertID }) {
                 try {
                     const querySnapshot = await getDoc(doc(db, "users", `${user?.email}`));
                     const idArray = querySnapshot.data()?.savedConcerts?.map((concert) => concert.id);
+                    setIdFilter(idArray);
                     const filteredResult = idArray.includes(concertID);
-                    console.log(filteredResult);
                     if (filteredResult) {
                         setSaveIcon(true);
                     }
@@ -35,29 +37,56 @@ function ConcertInfo({ concertData, concertID }) {
                 }
             }
         }
+
         findUserSavedConcerts();
         handleResize();
 
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, [user?.email]);
+    }, [user, concertID]);
 
-    async function saveIconHandler() {
+    async function saveMovieHandler() {
         if (user?.email) {
-            setSaveIcon(!saveIcon);
-            const userRef = doc(db, "users", `${user?.email}`);
-            await updateDoc(userRef, {
-                savedConcerts: arrayUnion({
-                    id: concertID,
-                    title: concertData.title,
-                    img: concertData.concertCover,
-                }),
-            });
+            try {
+                const concertRef = doc(db, "users", `${user?.email}`);
+                await updateDoc(concertRef, {
+                    savedConcerts: arrayUnion({
+                        id: concertID,
+                        title: concertData.title,
+                        img: concertData.concertCover,
+                    }),
+                });
+                setSaveIcon(true);
+            } catch (error) {
+                console.log(error);
+            }
         } else {
             alert("Please Log In to save a concert");
         }
     }
+
+    async function deleteMovieHandler() {
+        try {
+            const docRef = doc(db, "users", `${user?.email}`);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const savedConcerts = docSnap.data().savedConcerts;
+                const concertToRemove = savedConcerts.find((concert) => concert.id === concertID);
+                if (concertToRemove) {
+                    await updateDoc(docRef, {
+                        savedConcerts: arrayRemove(concertToRemove),
+                    });
+                }
+                setSaveIcon(false)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    console.log(idFilter);
     console.log(user?.email);
     return (
         <>
@@ -85,12 +114,12 @@ function ConcertInfo({ concertData, concertID }) {
                             </button>
                             {!saveIcon ? (
                                 <EmptyHeartIcon
-                                    onClick={saveIconHandler}
+                                    onClick={saveMovieHandler}
                                     className="ml-6 scale-100 cursor-pointer hover:scale-110 ease-in duration-100 "
                                 />
                             ) : (
                                 <FilledHeartIcon
-                                    onClick={saveIconHandler}
+                                    onClick={deleteMovieHandler}
                                     className="ml-6 scale-100 cursor-pointer hover:scale-110 ease-in duration-100 "
                                 />
                             )}
@@ -115,12 +144,12 @@ function ConcertInfo({ concertData, concertID }) {
                             </button>
                             {!saveIcon ? (
                                 <EmptyHeartIcon
-                                    onClick={saveIconHandler}
+                                    onClick={saveMovieHandler}
                                     className="ml-6 scale-100 cursor-pointer hover:scale-110 ease-in duration-100 "
                                 />
                             ) : (
                                 <FilledHeartIcon
-                                    onClick={saveIconHandler}
+                                    onClick={deleteMovieHandler}
                                     className="ml-6 scale-100 cursor-pointer hover:scale-110 ease-in duration-100 "
                                 />
                             )}
