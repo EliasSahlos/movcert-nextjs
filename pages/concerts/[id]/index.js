@@ -39,6 +39,7 @@ function SpecificConcert({ id }) {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
+
     
     return (
         <>

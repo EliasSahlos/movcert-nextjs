@@ -5,43 +5,43 @@ import EmptyHeartIcon from "@mui/icons-material/FavoriteBorder";
 import FilledHeartIcon from "@mui/icons-material/Favorite";
 import { useEffect, useState } from "react";
 import { UserAuth } from "@/context/AuthContext";
-import { arrayUnion, updateDoc, doc, onSnapshot } from "firebase/firestore";
+import { arrayUnion, updateDoc, doc, onSnapshot, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
 function ConcertInfo({ concertData, concertID }) {
     const [screenWidth, setScreenWidth] = useState(0);
     const [saveIcon, setSaveIcon] = useState(false);
-
     const { user } = UserAuth();
-    const currentUser = auth.currentUser;
+
     useEffect(() => {
         function handleResize() {
             setScreenWidth(window.innerWidth);
         }
         window.addEventListener("resize", handleResize);
 
-        async function findSavedConcert() {
-            const concertIdArr = []
-            const querySnapshot = await getDocs(collection(db, "users"));
-            querySnapshot.forEach((doc) => {
-                const datatest = doc.data().savedConcerts;
-                datatest.forEach((concert) => {
-                    concertIdArr.push(concert.id)
-                })
-                const filteredResult = concertIdArr.includes(concertID)
-                if(filteredResult){
-                    setSaveIcon(true)
+        async function findUserSavedConcerts() {
+            if (user) {
+                try {
+                    const querySnapshot = await getDoc(doc(db, "users", `${user?.email}`));
+                    const idArray = querySnapshot.data()?.savedConcerts?.map((concert) => concert.id);
+                    const filteredResult = idArray.includes(concertID);
+                    console.log(filteredResult);
+                    if (filteredResult) {
+                        setSaveIcon(true);
+                    }
+                } catch (error) {
+                    console.log(error);
                 }
-            });
+            }
         }
-
+        findUserSavedConcerts();
         handleResize();
-        findSavedConcert();
+
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, []);
+    }, [user?.email]);
 
     async function saveIconHandler() {
         if (user?.email) {
@@ -58,13 +58,17 @@ function ConcertInfo({ concertData, concertID }) {
             alert("Please Log In to save a concert");
         }
     }
-
+    console.log(user?.email);
     return (
         <>
             {screenWidth < 768 ? (
                 <div>
                     <div className="flex justify-center items-center mb-4">
-                        <Image src={concertData.concertCover} width={400} height={20} alt="broken-img" />
+                        {concertData.concertCover ? (
+                            <Image src={concertData.concertCover} width={400} height={20} alt="broken-img" />
+                        ) : (
+                            <p>brokenImage</p>
+                        )}
                     </div>
                     <div className="text-center">
                         <h1 className="text-center text-xl mb-2">{concertData.place}</h1>

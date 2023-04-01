@@ -9,7 +9,7 @@ import { UserAuth } from "@/context/AuthContext";
 function Concerts({screenWidth}) {
     const [concerts,setConcerts] = useState([])
 
-    const user = UserAuth()
+    const {user} = UserAuth()
 
     useEffect(() => {
         async function getConcertData() {
@@ -19,7 +19,8 @@ function Concerts({screenWidth}) {
         getConcertData();
     }, []);
 
-    console.log(user);
+    
+    
     return (
         <>
             <Head>
