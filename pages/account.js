@@ -1,6 +1,21 @@
 import Head from "next/head";
-
+import ConcertCard from "@/components/ConcertCard";
+import { useEffect, useState } from "react";
+import { UserAuth } from "@/context/AuthContext";
+import { db } from "../firebase/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
+import Image from "next/image";
 function Account() {
+    const [savedConcerts, setSavedConcerts] = useState([]);
+    const { user } = UserAuth();
+
+    useEffect(() => {
+        onSnapshot(doc(db, "users", `${user?.email}`), (doc) => {
+            // console.log(doc.data()?.savedConcerts);
+            setSavedConcerts(doc.data()?.savedConcerts);
+        });
+    }, [user?.email]);
+
     return (
         <>
             <Head>
@@ -9,10 +24,33 @@ function Account() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="h-screen bg-cover custom-img" data-aos="fade">
+            <div className="h-[550px] bg-cover custom-img" data-aos="fade">
                 <div className="flex items-center justify-center">
                     <div className="absolute top-0 bottom-0 right-0 left-0 bg-gradient-to-b from-black h-[140px]" />
-                    <div className="absolute top-0 bottom-0 right-0 left-0 bg-black/40 h-screen" />
+                    <div className="absolute h-[550px] top-0 bottom-0 right-0 left-0 bg-black/40 " />
+                </div>
+                <div className="z-10 mt-[320px]">
+                    <h1 className="font-bold text-center text-[50px] text-white mt-[-85px]" data-aos="fade-up">
+                        My Account
+                    </h1>
+                </div>
+            </div>
+            <div className="p-4">
+                <h1 className="text-[30px]" data-aos="fade-up">Saved Concerts</h1>
+                <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 gap-4 lg:grid-cols-6 gap-6">
+                    {savedConcerts?.map((concert) => (
+                        <div key={concert.id}>
+                            <Image 
+                                src={concert.img}
+                                width={400}
+                                height={20}
+                                alt="broken-img"
+                                className="rounded h-auto max-w-full shadow-xl scale-100 hover:scale-105 ease-in duration-100"
+                                data-aos="fade-up"
+                            />
+                            <h1 className="text-center mt-2" data-aos="fade-up">{concert.title}</h1>
+                        </div>
+                    ))}
                 </div>
             </div>
         </>

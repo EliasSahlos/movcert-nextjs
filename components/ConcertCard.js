@@ -8,7 +8,7 @@ function ConcertCard({ screenWidth, concertsData }) {
     
     return (
         <>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 gap-4 lg:gap-6">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 gap-4 lg:grid-cols-4 gap-6">
                 {concertsData.map((concert) => (
                     <div key={concert.id}>
                         <div className="mb-2">
