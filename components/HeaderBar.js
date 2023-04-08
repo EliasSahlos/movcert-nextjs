@@ -1,17 +1,19 @@
 import Link from "next/link";
-import { Fade as Hamburger } from "hamburger-react";
-import { useEffect, useState } from "react";
-import { UserAuth } from "@/context/AuthContext";
-import { useRouter } from "next/router";
+import {Fade as Hamburger} from "hamburger-react";
+import {useEffect, useState} from "react";
+import {UserAuth} from "@/context/AuthContext";
+import {useRouter} from "next/router";
 
 function HeaderBar() {
     const [hamburgerMenu, setHamburgerMenu] = useState(false);
     const [color, setColor] = useState("transparent");
     const [textColor, setTextColor] = useState("white");
     const [hamburgerMenuIsOpen, setHamburgerMenuIsOpen] = useState(false);
-    let router = useRouter();
+    const [screenWidth, setScreenWidth] = useState(0)
 
-    const { user, logOut } = UserAuth();
+    let router = useRouter();
+    const {user, logOut} = UserAuth();
+
     function hamburgerMenuHandler() {
         setHamburgerMenu(!hamburgerMenu);
     }
@@ -30,7 +32,17 @@ function HeaderBar() {
                 setTextColor("#ffffff");
             }
         }
+
+        function handleResize() {
+            setScreenWidth(window.innerWidth);
+        }
+
+        window.addEventListener("resize", handleResize);
         window.addEventListener("scroll", changeColor);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
     }, []);
 
     async function handleLogout() {
@@ -41,16 +53,18 @@ function HeaderBar() {
             console.log(error);
         }
     }
-    
+
+    console.log(screenWidth)
     return (
-        <div style={{ backgroundColor: `${color}` }} className="fixed left-0 top-0 w-full ease-in duration-300 z-[1] h-[90px]">
+        <div style={{backgroundColor: `${color}`}}
+             className="fixed left-0 top-0 w-full ease-in duration-300 z-[1] h-[90px]">
             <div className="max-w-[1240px] m-auto flex justify-between items-center p-8 text-white md:p-6">
                 <Link href="/">
-                    <h1 style={{ color: `${textColor}` }} className="text-[20px] lg:text-[30px]">
+                    <h1 style={{color: `${textColor}`}} className="text-[20px] lg:text-[30px]">
                         Movcert
                     </h1>
                 </Link>
-                <ul style={{ color: `${textColor}` }} className="hidden gap-8 md:flex">
+                <ul style={{color: `${textColor}`}} className="hidden gap-8 md:flex">
                     <li className="p-2 text-[20px]">
                         <Link href="/">Home</Link>
                     </li>
@@ -63,11 +77,12 @@ function HeaderBar() {
                     {user?.email ? (
                         <>
                             <li className="p-2 text-[20px]">
-                               
-                                    <Link href="/account">Account</Link>
-                                
+
+                                <Link href="/account">Account</Link>
+
                             </li>
-                            <li onClick={handleLogout} className="cursor-pointer p-2 text-[20px] bg-[#ffba5a] px-6 rounded-lg text-black ">
+                            <li onClick={handleLogout}
+                                className="cursor-pointer p-2 text-[20px] bg-[#ffba5a] px-6 rounded-lg text-black ">
                                 Logout
                             </li>
                         </>
@@ -91,9 +106,14 @@ function HeaderBar() {
                         setHamburgerMenuIsOpen(!hamburgerMenuIsOpen);
                     }}
                 >
-                    <div style={{ color: `${textColor}` }}>
-                        <Hamburger toggle={setHamburgerMenuIsOpen} toggled={hamburgerMenuIsOpen} size={25} />
-                    </div>
+                    {screenWidth <= 766 && hamburgerMenuIsOpen === true ?
+                        <div style={{color: "white"}}>
+                            <Hamburger toggle={setHamburgerMenuIsOpen} toggled={hamburgerMenuIsOpen} size={25}/>
+                        </div> :
+                        <div style={{color: `${textColor}`}}>
+                            <Hamburger toggle={setHamburgerMenuIsOpen} toggled={hamburgerMenuIsOpen} size={25}/>
+                        </div>}
+
                 </div>
                 {/* Mobile Menu */}
                 <div
@@ -143,17 +163,17 @@ function HeaderBar() {
                         {user?.email ? (
                             <>
                                 <li className="p-4 text-4xl">
-                                   
-                                        <Link
-                                            href="/account"
-                                            onClick={() => {
-                                                hamburgerMenuCloser();
-                                                setHamburgerMenuIsOpen(false);
-                                            }}
-                                            className="hover:text-[#FFBA5A]"
-                                        >
-                                            Account
-                                        </Link>
+
+                                    <Link
+                                        href="/account"
+                                        onClick={() => {
+                                            hamburgerMenuCloser();
+                                            setHamburgerMenuIsOpen(false);
+                                        }}
+                                        className="hover:text-[#FFBA5A]"
+                                    >
+                                        Account
+                                    </Link>
                                 </li>
                                 <li
                                     onClick={() => {
