@@ -56,7 +56,7 @@ function HeaderBar() {
     
     return (
         <div style={{backgroundColor: `${color}`}}
-             className="fixed left-0 top-0 w-full ease-in duration-300 z-[1] h-[90px]">
+             className="fixed left-0 top-0 w-full ease-in duration-300 z-50 h-[90px]">
             <div className="max-w-[1240px] m-auto flex justify-between items-center p-8 text-white md:p-6">
                 <Link href="/">
                     <h1 style={{color: `${textColor}`}} className="text-[20px] lg:text-[30px]">

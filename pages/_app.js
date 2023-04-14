@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }) {
     return (
         <>
             <AuthContextProvider>
-                <HeaderBar />
+                <HeaderBar/>
                 {AuthRequired.includes(router.pathname) ? (
                     <>
                         <ProtectedRoute>
