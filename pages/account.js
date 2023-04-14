@@ -36,7 +36,7 @@ function Account() {
                 </div>
             </div>
             <div className="p-4">
-                <h1 className="text-[30px]" data-aos="fade-up">Saved Concerts</h1>
+                <h1 className="text-[30px] font" data-aos="fade-up">Saved Concerts</h1>
 
                 <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 gap-4 lg:grid-cols-6 gap-6">
                     {savedConcerts?.map((concert) => (

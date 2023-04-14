@@ -53,8 +53,7 @@ function HeaderBar() {
             console.log(error);
         }
     }
-
-    console.log(screenWidth)
+    
     return (
         <div style={{backgroundColor: `${color}`}}
              className="fixed left-0 top-0 w-full ease-in duration-300 z-[1] h-[90px]">

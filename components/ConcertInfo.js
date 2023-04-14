@@ -3,18 +3,20 @@ import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import EmptyHeartIcon from "@mui/icons-material/FavoriteBorder";
 import FilledHeartIcon from "@mui/icons-material/Favorite";
-import {useEffect, useState} from "react";
-import {UserAuth} from "@/context/AuthContext";
-import {arrayUnion, updateDoc, doc, onSnapshot, getDoc, arrayRemove, deleteDoc} from "firebase/firestore";
-import {auth, db} from "../firebase/firebase";
-import {collection, query, where, getDocs} from "firebase/firestore";
+import MoneyIcon from "@mui/icons-material/AttachMoney";
+import { useEffect, useState } from "react";
+import { UserAuth } from "@/context/AuthContext";
+import { arrayUnion, updateDoc, doc, onSnapshot, getDoc, arrayRemove, deleteDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+import Link from "next/link";
+import { Concert_One } from "next/font/google";
 
-function ConcertInfo({concertData, concertID}) {
+function ConcertInfo({ concertData, concertID, onBookATicketData }) {
     const [screenWidth, setScreenWidth] = useState(0);
     const [saveIcon, setSaveIcon] = useState(false);
     const [idFilter, setIdFilter] = useState([]);
 
-    const {user} = UserAuth();
+    const { user } = UserAuth();
 
     useEffect(() => {
         function handleResize() {
@@ -55,7 +57,10 @@ function ConcertInfo({concertData, concertID}) {
                     savedConcerts: arrayUnion({
                         id: concertID,
                         title: concertData.title,
-                        img: concertData.concertCover,
+                        concertCover: concertData.concertCover,
+                        price: concertData.price,
+                        place: concertData.place,
+                        totalSeats: concertData.totalSeats,
                     }),
                 });
                 setSaveIcon(true);
@@ -80,39 +85,35 @@ function ConcertInfo({concertData, concertID}) {
                         savedConcerts: arrayRemove(concertToRemove),
                     });
                 }
-                setSaveIcon(false)
+                setSaveIcon(false);
             }
         } catch (error) {
             console.log(error);
         }
     }
 
-    console.log(idFilter);
-    console.log(user?.email);
     return (
         <>
             {screenWidth < 768 ? (
                 <div>
                     <div className="flex justify-center items-center mb-4">
                         {concertData.concertCover ? (
-                            <Image src={concertData.concertCover} width={400} height={20} alt="broken-img"/>
+                            <Image src={concertData.concertCover} width={400} height={20} alt="broken-img" />
                         ) : (
                             <p>brokenImage</p>
                         )}
                     </div>
                     <div className="text-center">
                         <h1 className="text-center text-xl mb-2">{concertData.place}</h1>
-                        <hr/>
+                        <hr />
                         <p className="mt-2 ">
-                            <MusicNoteIcon/> <span className="text-gray-600">Genre : {concertData.genre}</span>{" "}
+                            <MusicNoteIcon /> <span className="text-gray-600">Genre : {concertData.genre}</span>{" "}
                         </p>
                         <p className="mt-2 ">
-                            <ConfirmationNumberIcon/> <span
-                            className="text-gray-600">Total Seats : {concertData.totalSeats}</span>{" "}
+                            <ConfirmationNumberIcon /> <span className="text-gray-600">Total Seats : {concertData.totalSeats}</span>{" "}
                         </p>
                         <p>
-                            <button
-                                className=" bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
+                            <button className=" bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
                                 Book A Ticket
                             </button>
                             {!saveIcon ? (
@@ -131,22 +132,32 @@ function ConcertInfo({concertData, concertID}) {
                 </div>
             ) : (
                 <div className="flex justify-center items-center md:gap-[50px] lg:gap-[100px]">
-                    <Image src={concertData.concertCover} width={400} height={20} alt="broken-img"/>
+                    <Image src={concertData.concertCover} width={400} height={20} alt="broken-img" />
                     <div className="text-center">
                         <h1 className="text-center text-xl mb-2">{concertData.place}</h1>
-                        <hr/>
+                        <hr />
                         <p className="mt-2 ">
-                            <MusicNoteIcon/> <span className="text-gray-600">Genre : {concertData.genre}</span>{" "}
+                            <MusicNoteIcon /> <span className="text-gray-600">Genre : {concertData.genre}</span>
                         </p>
                         <p className="mt-2 ">
-                            <ConfirmationNumberIcon/> <span
-                            className="text-gray-600">Total Seats : {concertData.totalSeats}</span>{" "}
+                            <ConfirmationNumberIcon /> <span className="text-gray-600">Total Seats : {concertData.totalSeats}</span>
+                        </p>
+                        <p className="mt-2 ">
+                            <MoneyIcon /> <span className="text-gray-600">Price : {concertData.price}</span>
                         </p>
                         <p>
-                            <button
-                                className=" bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
-                                Book A Ticket
-                            </button>
+                            {user?.email ? (
+                                <Link href={`${concertID}` + "/checkout"}>
+                                    <button className=" bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
+                                        Book A Ticket
+                                    </button>
+                                </Link>
+                            ) : (
+                                <button className=" bg-[#f7d5a6] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 cursor-not-allowed">
+                                    Book A Ticket
+                                </button>
+                            )}
+
                             {!saveIcon ? (
                                 <EmptyHeartIcon
                                     onClick={saveMovieHandler}

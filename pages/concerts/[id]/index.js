@@ -6,6 +6,7 @@ import Head from "next/head";
 import Image from "next/image";
 import ConcertInfo from "@/components/ConcertInfo";
 import { UserAuth } from "@/context/AuthContext";
+import {data} from "autoprefixer";
 
 export async function getServerSideProps(router) {
     const idObj = router.query;
@@ -21,8 +22,8 @@ export async function getServerSideProps(router) {
 function SpecificConcert({ id }) {
     const [screenWidth, setScreenWidth] = useState(0);
     const [concertData, setConcertData] = useState([]);
+
     const router = useRouter();
-    
     const user = UserAuth()
 
     useEffect(() => {
@@ -39,7 +40,6 @@ function SpecificConcert({ id }) {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
-
     
     return (
         <>
@@ -49,9 +49,10 @@ function SpecificConcert({ id }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            
             <div className="bg-cover bg-center h-[700px]" style={{ backgroundImage: `url(${concertData.concertImage})`}} data-aos="fade">
                 <div className="absolute top-0 bottom-0 right-0 left-0 bg-gradient-to-b from-black h-[140px]" />
-                <div className="absolute h-[700px] top-0 bottom-0 right-0 left-0 w-screen bg-black/40 z-0 " />
+                <div className="absolute h-[700px] top-0 bottom-0 right-0 left-0 w-full bg-black/40 z-0 " />
                 <div className="flex justify-center items-center text-black">
                     <div className="z-10 mt-[320px]">
                         <div className=" block w-screen p-8 mt-[270px] border rounded-lg shadow-md bg-white z-10 abovesm:w-[550px] md:w-[800px]" data-aos="fade-up">
@@ -61,8 +62,8 @@ function SpecificConcert({ id }) {
                 </div>
                 <div className="mt-8 p-4">
                     <ConcertInfo concertData={concertData} concertID={id}/>
-                </div>
-            </div>`
+                </div>  
+            </div>
         </>
     );
 }

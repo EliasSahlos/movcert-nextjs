@@ -8,6 +8,7 @@ import { UserAuth } from "@/context/AuthContext";
 
 function Concerts({screenWidth}) {
     const [concerts,setConcerts] = useState([])
+  
 
     const {user} = UserAuth()
 
@@ -19,7 +20,7 @@ function Concerts({screenWidth}) {
         getConcertData();
     }, []);
 
-    
+   
     
     return (
         <>
