@@ -91,7 +91,6 @@ function ConcertInfo({ concertData, concertID, onBookATicketData }) {
             console.log(error);
         }
     }
-
     
     return (
         <>
