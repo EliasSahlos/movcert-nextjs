@@ -45,10 +45,12 @@ function Checkout({ id }) {
     }, []);
 
     function handleTicketValueChange(event) {
-        if (event.key < "0" || event.key > "9") {
+        var key = event.which || event.keyCode;
+        if (key && (key <= 47 || key >= 58) && key != 8) {
             event.preventDefault();
         }
     }
+
 
     async function handleBookingSubmit(e){
         e.preventDefault()
