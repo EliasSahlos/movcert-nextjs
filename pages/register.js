@@ -52,13 +52,6 @@ function Register() {
                                 className="my-2 border-2 border-[##ced4da] h-[50px] p-2 w-full outline-none rounded shadow-sm focus:border-[#f3c07a] "
                                 autoComplete="current-password"
                             />
-                            <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
-                                <p>
-                                    <input className="mr-2" type="checkbox" />
-                                    Remember Me
-                                </p>
-                                <p>Need Help?</p>
-                            </div>
                             <div className="flex justify-center items-center">
                                 <button className=" bg-[#ffba5a] text-white w-[120px] h-[50px] mt-6 rounded-full shadow-md ">
                                     Register

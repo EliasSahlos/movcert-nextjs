@@ -167,11 +167,11 @@ function Checkout({ id }) {
                                                     {concertData.totalSeats}
                                                 </p>
                                                 {user?.email ? (
-                                                    <button className="mt-[170px] ml-[48px] bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
+                                                    <button className="mt-[160px] ml-[48px] bg-[#ffba5a] text-white w-[140px] h-[50px] rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
                                                         Book A Ticket
                                                     </button>
                                                 ) : (
-                                                    <button className="mt-[170px] ml-[48px] bg-[#f7d5a6] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 cursor-not-allowed">
+                                                    <button className="mt-6 ml-[48px] bg-[#f7d5a6] text-white w-[140px] h-[50px] rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 cursor-not-allowed">
                                                         Book A Ticket
                                                     </button>
                                                 )}

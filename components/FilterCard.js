@@ -42,7 +42,7 @@ function FilterCard({screenWidth}) {
                 </div>
             ) : screenWidth < 1024 ? (
                 <div className="flex justify-center items-center">
-                    <div className=" block w-[550px] p-8 mt-[150px] border rounded-lg shadow-md bg-white z-10 grid grid-cols-4 gap-4 w-[800px]">
+                    <div className="p-8 mt-[150px] border rounded-lg shadow-md bg-white z-10 grid grid-cols-4 gap-4 w-[800px]">
                         <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Concert Title</p>
                         <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Music Genre</p>
                         <input
@@ -79,7 +79,7 @@ function FilterCard({screenWidth}) {
                 </div>
             ) : (
                 <div className="flex justify-center items-center">
-                    <div className=" block w-[1200px] p-8 mt-[150px] border rounded-lg shadow-md bg-white z-10 grid grid-cols-8 gap-4 w-[800px]">
+                    <div className="w-[1200px] p-8 mt-[150px] border rounded-lg shadow-md bg-white z-10 grid grid-cols-8 gap-4 w-[800px]">
                         <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Concert Title</p>
                         <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Music Genre</p>
                         <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Price - Low</p>
