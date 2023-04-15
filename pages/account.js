@@ -5,6 +5,7 @@ import { UserAuth } from "@/context/AuthContext";
 import { db } from "../firebase/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 import Image from "next/image";
+import Link from "next/link";
 function Account() {
     const [savedConcerts, setSavedConcerts] = useState([]);
     const { user } = UserAuth();
@@ -36,20 +37,26 @@ function Account() {
                 </div>
             </div>
             <div className="p-4">
-                <h1 className="text-[30px] font" data-aos="fade-up">Saved Concerts</h1>
+                <h1 className="text-[30px] font" data-aos="fade-up">
+                    Saved Concerts
+                </h1>
 
                 <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 gap-4 lg:grid-cols-6 gap-6">
                     {savedConcerts?.map((concert) => (
                         <div key={concert.id}>
-                            <Image 
-                                src={concert.concertCover}
-                                width={400}
-                                height={20}
-                                alt="broken-img"
-                                className="rounded h-auto max-w-full shadow-xl scale-100 hover:scale-105 ease-in duration-100"
-                                data-aos="fade-up"
-                            />
-                            <h1 className="text-center mt-2" data-aos="fade-up">{concert.title}</h1>
+                            <Link href={'/concerts/' + concert.id}>
+                                <Image
+                                    src={concert.concertCover}
+                                    width={400}
+                                    height={20}
+                                    alt="broken-img"
+                                    className="rounded h-auto max-w-full shadow-xl scale-100 hover:scale-105 ease-in duration-100"
+                                    data-aos="fade-up"
+                                />
+                            </Link>
+                            <h1 className="text-center mt-2" data-aos="fade-up">
+                                {concert.title}
+                            </h1>
                         </div>
                     ))}
                 </div>
