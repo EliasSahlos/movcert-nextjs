@@ -113,9 +113,18 @@ function ConcertInfo({ concertData, concertID, onBookATicketData }) {
                             <ConfirmationNumberIcon /> <span className="text-gray-600">Total Seats : {concertData.totalSeats}</span>{" "}
                         </p>
                         <p>
-                            <button className=" bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
-                                Book A Ticket
-                            </button>
+                            {user?.email ? (
+                                <Link href={`${concertID}` + "/checkout"}>
+                                    <button className=" bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
+                                        Book A Ticket
+                                    </button>
+                                </Link>
+                            ) : (
+                                <button className=" bg-[#f7d5a6] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 cursor-not-allowed">
+                                    Book A Ticket
+                                </button>
+                            )}
+
                             {!saveIcon ? (
                                 <EmptyHeartIcon
                                     onClick={saveMovieHandler}
