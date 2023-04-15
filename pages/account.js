@@ -42,7 +42,7 @@ function Account() {
                     {savedConcerts?.map((concert) => (
                         <div key={concert.id}>
                             <Image 
-                                src={concert.img}
+                                src={concert.concertCover}
                                 width={400}
                                 height={20}
                                 alt="broken-img"
