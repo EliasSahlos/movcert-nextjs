@@ -65,85 +65,126 @@ function Checkout({ id }) {
                         <h1 className="text-4xl">Checkout</h1>
                         <hr className="mt-2" />
                         {screenWidth < 768 ? (
-                            <div>
-                                <div className="flex justify-center items-center">
-                                    <Image src={concertData.concertCover} width={250} height={20} alt="broken-img" className="mt-2" />
-                                </div>
-                                <div className="mt-2 text-center ">
-                                    <p className="mt-2">
-                                        <span className=" font-bold">Title</span> : {concertData.title}
-                                    </p>
-                                    <p className="mt-2">
-                                        <span className=" font-bold">Place</span> : {concertData.place}
-                                    </p>
-                                    <p className="mt-2">
-                                        <span className=" font-bold">Ticket Price</span> : {concertData.price}
-                                    </p>
-                                    <p className="mt-2">
-                                        <span className=" font-bold">Total Seats Remaining</span> : {concertData.totalSeats}
-                                    </p>
-                                    <p className="mt-8">
-                                        <span className="text-lg ">Tickets</span> :
-                                        <input
-                                            className=" ml-4 border-2 border-[##ced4da] h-[30px]  p-2 w-[80px] outline-none rounded shadow-sm focus:border-[#f3c07a] "
-                                            type="number"
-                                            id="ticketNumber"
-                                            min="1"
-                                            max="50"
-                                            value={ticketsNumber}
-                                            onKeyDown={handleTicketValueChange}
-                                            onChange={(e) => setTicketsNumber(e.target.value)}
-                                        />
-                                    </p>
-                                    <p className="text-lg mt-6">Final Price</p>
-                                    <p>
-                                        <span className="text-3xl font-bold">{concertData.price * ticketsNumber}</span> €
-                                    </p>
-                                    <button className=" bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
-                                        Book A Ticket
-                                    </button>
-                                </div>
-                            </div>
+                            <>
+                                {user?.email ? (
+                                    <>
+                                        <div>
+                                            <div className="flex justify-center items-center">
+                                                <Image
+                                                    src={concertData.concertCover}
+                                                    width={250}
+                                                    height={20}
+                                                    alt="broken-img"
+                                                    className="mt-2"
+                                                />
+                                            </div>
+                                            <div className="mt-2 text-center ">
+                                                <p className="mt-2">
+                                                    <span className=" font-bold">Title</span> : {concertData.title}
+                                                </p>
+                                                <p className="mt-2">
+                                                    <span className=" font-bold">Place</span> : {concertData.place}
+                                                </p>
+                                                <p className="mt-2">
+                                                    <span className=" font-bold">Ticket Price</span> : {concertData.price}
+                                                </p>
+                                                <p className="mt-2">
+                                                    <span className=" font-bold">Total Seats Remaining</span> : {concertData.totalSeats}
+                                                </p>
+                                                <p className="mt-8">
+                                                    <span className="text-lg ">Tickets</span> :
+                                                    <input
+                                                        className=" ml-4 border-2 border-[##ced4da] h-[30px]  p-2 w-[80px] outline-none rounded shadow-sm focus:border-[#f3c07a] "
+                                                        type="number"
+                                                        id="ticketNumber"
+                                                        min="1"
+                                                        max="50"
+                                                        value={ticketsNumber}
+                                                        onKeyDown={handleTicketValueChange}
+                                                        onChange={(e) => setTicketsNumber(e.target.value)}
+                                                    />
+                                                </p>
+                                                <p className="text-lg mt-6">Final Price</p>
+                                                <p>
+                                                    <span className="text-3xl font-bold">{concertData.price * ticketsNumber}</span> €
+                                                </p>
+                                                <button className=" bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
+                                                    Book A Ticket
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                        <strong class="font-bold">Error!</strong>
+                                        <span class="block sm:inline">Please Log In to book a ticket</span>
+                                    </div>
+                                )}
+                            </>
                         ) : (
-                            <div className="grid grid-cols-2 gap-2">
-                                <div>
-                                    <Image src={concertData.concertCover} width={270} height={20} alt="broken-img" className="mt-2" />
-                                    <p className="mt-8">
-                                        <span className="text-lg ">Tickets</span> :
-                                        <input
-                                            className=" ml-[10px] border-2 border-[##ced4da] h-[30px]  p-2 w-[80px] outline-none rounded shadow-sm focus:border-[#f3c07a] "
-                                            type="number"
-                                            id="ticketNumber"
-                                            min="1"
-                                            max="50"
-                                            value={ticketsNumber}
-                                            onKeyDown={handleTicketValueChange}
-                                            onChange={(e) => setTicketsNumber(e.target.value)}
-                                        />
-                                    </p>
-                                    <p className="text-lg mt-6">Final Price</p>
-                                    <p>
-                                        <span className="text-3xl font-bold">{concertData.price * ticketsNumber}</span> €
-                                    </p>
-                                </div>
-                                <div className="mt-2 ">
-                                    <p className="mt-4">
-                                        <span className="text-lg font-bold">Title</span> : {concertData.title}
-                                    </p>
-                                    <p className="mt-4">
-                                        <span className="text-lg font-bold">Place</span> : {concertData.place}
-                                    </p>
-                                    <p className="mt-4">
-                                        <span className="text-lg font-bold">Ticket Price</span> : {concertData.price}
-                                    </p>
-                                    <p className="mt-4">
-                                        <span className="text-lg font-bold">Total Seats Remaining</span> : {concertData.totalSeats}
-                                    </p>
-                                    <button className="mt-[170px] ml-[55px] bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
-                                        Book A Ticket
-                                    </button>
-                                </div>
-                            </div>
+                            <>
+                                {user?.email ? (
+                                    <>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <div>
+                                                <Image
+                                                    src={concertData.concertCover}
+                                                    width={270}
+                                                    height={20}
+                                                    alt="broken-img"
+                                                    className="mt-2"
+                                                />
+                                                <p className="mt-8">
+                                                    <span className="text-lg ">Tickets</span> :
+                                                    <input
+                                                        className=" ml-[10px] border-2 border-[##ced4da] h-[30px]  p-2 w-[80px] outline-none rounded shadow-sm focus:border-[#f3c07a] "
+                                                        type="number"
+                                                        id="ticketNumber"
+                                                        min="1"
+                                                        max="50"
+                                                        value={ticketsNumber}
+                                                        onKeyDown={handleTicketValueChange}
+                                                        onChange={(e) => setTicketsNumber(e.target.value)}
+                                                    />
+                                                </p>
+                                                <p className="text-lg mt-6">Final Price</p>
+                                                <p>
+                                                    <span className="text-3xl font-bold">{concertData.price * ticketsNumber}</span> €
+                                                </p>
+                                            </div>
+                                            <div className="mt-2 ">
+                                                <p className="mt-4">
+                                                    <span className="text-lg font-bold">Title</span> : {concertData.title}
+                                                </p>
+                                                <p className="mt-4">
+                                                    <span className="text-lg font-bold">Place</span> : {concertData.place}
+                                                </p>
+                                                <p className="mt-4">
+                                                    <span className="text-lg font-bold">Ticket Price</span> : {concertData.price}
+                                                </p>
+                                                <p className="mt-4">
+                                                    <span className="text-lg font-bold">Total Seats Remaining</span> :{" "}
+                                                    {concertData.totalSeats}
+                                                </p>
+                                                {user?.email ? (
+                                                    <button className="mt-[170px] ml-[48px] bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
+                                                        Book A Ticket
+                                                    </button>
+                                                ) : (
+                                                    <button className="mt-[170px] ml-[48px] bg-[#f7d5a6] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 cursor-not-allowed">
+                                                        Book A Ticket
+                                                    </button>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                        <strong class="font-bold">Error!</strong>
+                                        <span class="block sm:inline ml-2">Please Log In to book a ticket</span>
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>

@@ -8,13 +8,13 @@ function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { user, signUp } = UserAuth();
-    let router = useRouter()
+    let router = useRouter();
 
     async function handleSubmit(e) {
         e.preventDefault();
         try {
             await signUp(email, password);
-            router.push('/')
+            router.back();
         } catch (error) {
             console.log(error);
         }

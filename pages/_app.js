@@ -27,16 +27,19 @@ export default function App({ Component, pageProps }) {
         function handleResize() {
             setScreenWidth(window.innerWidth);
         }
+
         window.addEventListener("resize", handleResize);
         handleResize();
+
         return () => {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
+
     return (
         <>
             <AuthContextProvider>
-                <HeaderBar/>
+                <HeaderBar />
                 {AuthRequired.includes(router.pathname) ? (
                     <>
                         <ProtectedRoute>

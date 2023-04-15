@@ -9,7 +9,7 @@ function ProtectedRoute({ children }) {
     useEffect(() => {
         async function getRouter() {
             if (!user) {
-                return router.push("/");
+                return router.back()
             }
         }
         getRouter();
