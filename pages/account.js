@@ -13,7 +13,7 @@ function Account() {
     const [savedConcerts, setSavedConcerts] = useState([]);
     const [bookedConcerts, setBookedConcerts] = useState([]);
     const [username, setUsername] = useState([]);
-    const [isOverlayOpen, setIsOverlayOpen] = useState(true);
+    const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const { user } = UserAuth();
 
     useEffect(() => {
