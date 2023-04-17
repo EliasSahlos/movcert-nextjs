@@ -8,14 +8,15 @@ const AuthContext = createContext();
 export function AuthContextProvider({ children }) {
     const [user, setUser] = useState({});
 
-    function signUp(email, password) {
+    function signUp(email, password, username) {
         createUserWithEmailAndPassword(auth, email, password);
-        setDoc(doc(db,'users',email),{
+        setDoc(doc(db, "users", email), {
+            username: `${username}`,
             savedConcerts: [],
             savedMovies: [],
             bookedConcerts: [],
             bookedMovies: [],
-        })
+        });
     }
 
     function logIn(email, password) {

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import ConcertCard from "@/components/ConcertCard";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { UserAuth } from "@/context/AuthContext";
 import { db } from "../firebase/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -9,13 +9,18 @@ import Link from "next/link";
 function Account() {
     const [savedConcerts, setSavedConcerts] = useState([]);
     const [bookedConcerts, setBookedConcerts] = useState([]);
-
+    const [username, setUsername] = useState([]);
     const { user } = UserAuth();
 
     useEffect(() => {
+        function getUsername() {
+            onSnapshot(doc(db, "users", `${user?.email}`), (doc) => {
+                setUsername(doc.data()?.username);
+            });
+        }
+
         function getSavedConcertsData() {
             onSnapshot(doc(db, "users", `${user?.email}`), (doc) => {
-                // console.log(doc.data()?.savedConcerts);
                 setSavedConcerts(doc.data()?.savedConcerts);
             });
         }
@@ -26,6 +31,7 @@ function Account() {
             });
         }
 
+        getUsername();
         getSavedConcertsData();
         getBookedConcertsData();
     }, [user?.email]);
@@ -48,12 +54,21 @@ function Account() {
                         My Account
                     </h1>
                 </div>
+                <div className="flex justify-center items-center text-black">
+                    <div className="z-10">
+                        <div
+                            className="block w-screen p-8 mt-[180px] border rounded-lg shadow-md bg-white z-10 abovesm:w-[550px] md:w-[800px]"
+                            data-aos="fade-up"
+                        >
+                            <h1 className="text-center text-2xl">Welcome back, <span className="font-bold">{username}</span></h1>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="p-4">
-                <h1 className="text-[30px] font" data-aos="fade-up">
+            <div className="p-4 mt-12">
+                <h1 className="text-[30px]" data-aos="fade-up">
                     Saved Concerts
                 </h1>
-
                 <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 gap-6">
                     {savedConcerts?.map((concert) => (
                         <div key={concert.id}>

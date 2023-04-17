@@ -5,18 +5,23 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 function Register() {
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
     const { user, signUp } = UserAuth();
     let router = useRouter();
 
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            await signUp(email, password);
-            router.back();
+            if (username.length !== 0 || email.length !== 0 || password.length !== 0) {
+                await signUp(email, password, username);
+                router.back();
+            }
         } catch (error) {
-            console.log(error);
+            setError(error.message)
         }
     }
 
@@ -39,6 +44,14 @@ function Register() {
                         <h1 className="text-3xl text-black">Register</h1>
                         <form onSubmit={handleSubmit}>
                             <input
+                                onChange={(e) => setUsername(e.target.value)}
+                                type="text"
+                                placeholder="Username"
+                                className=" mt-4 mb-2 border-2 border-[##ced4da] h-[50px] p-2 w-full outline-none rounded shadow-sm focus:border-[#f3c07a] "
+                                autoComplete="username"
+                            />
+
+                            <input
                                 onChange={(e) => setEmail(e.target.value)}
                                 type="email"
                                 placeholder="Email"
@@ -53,7 +66,7 @@ function Register() {
                                 autoComplete="current-password"
                             />
                             <div className="flex justify-center items-center">
-                                <button className=" bg-[#ffba5a] text-white w-[120px] h-[50px] mt-6 rounded-full shadow-md ">
+                                <button className=" bg-[#ffba5a] text-white w-[120px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100">
                                     Register
                                 </button>
                             </div>
