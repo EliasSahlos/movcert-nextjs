@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 html {
     scroll-behavior: smooth;
     font-family: "Montserrat", sans-serif;
@@ -9,4 +9,13 @@ html {
 
 .custom-img {
     background-image: url("../styles/img/finalcollage.png");
+}
+
+//Modal scroll fix for Firefox
+.isOverlayOpen-open {
+    -moz-appearance: menuimage;
+}
+
+.isOverlayOpen-open::-webkit-scrollbar {
+    width: 0 !important;
 }

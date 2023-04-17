@@ -1,15 +1,19 @@
 import Head from "next/head";
-import ConcertCard from "@/components/ConcertCard";
 import { use, useEffect, useState } from "react";
 import { UserAuth } from "@/context/AuthContext";
 import { db } from "../firebase/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
+import CloseIcon from "@mui/icons-material/Close";
+import FestivalIcon from "@mui/icons-material/Festival";
+import TicketIcon from "@mui/icons-material/ConfirmationNumber";
+
 function Account() {
     const [savedConcerts, setSavedConcerts] = useState([]);
     const [bookedConcerts, setBookedConcerts] = useState([]);
     const [username, setUsername] = useState([]);
+    const [isOverlayOpen, setIsOverlayOpen] = useState(true);
     const { user } = UserAuth();
 
     useEffect(() => {
@@ -31,10 +35,16 @@ function Account() {
             });
         }
 
+        if (isOverlayOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
+        }
+
         getUsername();
         getSavedConcertsData();
         getBookedConcertsData();
-    }, [user?.email]);
+    }, [user?.email, isOverlayOpen]);
 
     return (
         <>
@@ -60,7 +70,9 @@ function Account() {
                             className="block w-screen p-8 mt-[180px] border rounded-lg shadow-md bg-white z-10 abovesm:w-[550px] md:w-[800px]"
                             data-aos="fade-up"
                         >
-                            <h1 className="text-center text-2xl">Welcome back, <span className="font-bold">{username}</span></h1>
+                            <h1 className="text-center text-2xl">
+                                Welcome back, <span className="font-bold">{username}</span>
+                            </h1>
                         </div>
                     </div>
                 </div>
@@ -72,16 +84,18 @@ function Account() {
                 <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 gap-6">
                     {savedConcerts?.map((concert) => (
                         <div key={concert.id}>
-                            <Link href={"/concerts/" + concert.id}>
-                                <Image
-                                    src={concert.concertCover}
-                                    width={400}
-                                    height={20}
-                                    alt="broken-img"
-                                    className="rounded h-auto max-w-full shadow-xl scale-100 hover:scale-105 ease-in duration-100"
-                                    data-aos="fade-up"
-                                />
-                            </Link>
+                            <div className="scale-100 hover:scale-105 ease-in duration-100 cursor-pointer">
+                                <Link href={"/concerts/" + concert.id}>
+                                    <Image
+                                        src={concert.concertCover}
+                                        width={400}
+                                        height={20}
+                                        alt="broken-img"
+                                        className="rounded h-auto max-w-full shadow-xl scale-100 hover:scale-105 ease-in duration-100"
+                                        data-aos="fade-up"
+                                    />
+                                </Link>
+                            </div>
                             <h1 className="text-center mt-2" data-aos="fade-up">
                                 {concert.title}
                             </h1>
@@ -97,16 +111,52 @@ function Account() {
                 <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 gap-6">
                     {bookedConcerts?.map((concert) => (
                         <div key={concert.id}>
-                            <Link href={"/concerts/" + concert.id}>
+                            <div className="scale-100 hover:scale-105 ease-in duration-100 cursor-pointer">
                                 <Image
                                     src={concert.concertCover}
                                     width={400}
                                     height={20}
                                     alt="broken-img"
-                                    className="rounded h-auto max-w-full shadow-xl scale-100 hover:scale-105 ease-in duration-100"
+                                    className="rounded h-auto max-w-full shadow-xl"
                                     data-aos="fade-up"
+                                    onClick={() => setIsOverlayOpen(true)}
                                 />
-                            </Link>
+                            </div>
+                            {isOverlayOpen && (
+                                <>
+                                    <div className="fixed inset-0 bg-black bg-black/60 flex items-center justify-center z-50">
+                                        <div className="bg-white p-4 w-[600px] h-[400px] rounded shadow-lg" data-aos="fade-up">
+                                            <div className="flex justify-between">
+                                                <h1>{concert.title}</h1>
+                                                <CloseIcon className="cursor-pointer scale-100 hover:scale-110 ease-in duration-100 hover:text-red-500" onClick={() => setIsOverlayOpen(false)} />
+                                            </div>
+                                            <hr className="border-[1px] border-[#ffba5a] mt-2" />
+                                            <div className="flex justify-center items-center mt-2">
+                                                <Image
+                                                    src={concert.concertCover}
+                                                    width={150}
+                                                    height={20}
+                                                    alt="broken-img"
+                                                    className="rounded h-auto max-w-full shadow-xl"
+                                                />
+                                            </div>
+                                            <div className="p-2">
+                                                <p className="mt-4">
+                                                    <FestivalIcon className="mr-4" />
+                                                    {concert.place}
+                                                </p>
+                                                <p className="mt-4">
+                                                    <TicketIcon className="mr-4" />
+                                                    Number Of Tickets : {concert.numberOfTickets}
+                                                </p>
+                                                <p className="mt-12 text-center">
+                                                    Final Price : <span className="text-2xl font-bold">{concert.finalPrice} </span>$
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                             <h1 className="text-center mt-2" data-aos="fade-up">
                                 {concert.title}
                             </h1>
