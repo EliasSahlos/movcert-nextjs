@@ -23,7 +23,7 @@ function Checkout({ id }) {
     const [ticketsNumber, setTicketsNumber] = useState("");
 
     const { user } = UserAuth();
-    let router = useRouter()
+    let router = useRouter();
 
     useEffect(() => {
         function handleResize() {
@@ -45,18 +45,17 @@ function Checkout({ id }) {
     }, []);
 
     function handleTicketValueChange(event) {
-        var key = event.which || event.keyCode;
-        if (key && (key <= 47 || key >= 58) && key != 8) {
+        const regex = /^[0-9]+$/;
+        if (!regex.test(event.key) && event.key !== "Backspace") {
             event.preventDefault();
         }
     }
 
-
-    async function handleBookingSubmit(e){
-        e.preventDefault()
+    async function handleBookingSubmit(e) {
+        e.preventDefault();
         try {
-            const concertRef = doc(db,'users',`${user?.email}`);
-            await updateDoc(concertRef,{
+            const concertRef = doc(db, "users", `${user?.email}`);
+            await updateDoc(concertRef, {
                 bookedConcerts: arrayUnion({
                     id: id,
                     title: concertData.title,
@@ -64,12 +63,11 @@ function Checkout({ id }) {
                     place: concertData.place,
                     numberOfTickets: ticketsNumber,
                     finalPrice: concertData.price * ticketsNumber,
-                })
-            })
-            router.push("/concerts/" + id + "/checkout-success")
-        }
-        catch (error) {
-            console.log(error)
+                }),
+            });
+            router.push("/concerts/" + id + "/checkout-success");
+        } catch (error) {
+            console.log(error);
         }
     }
 

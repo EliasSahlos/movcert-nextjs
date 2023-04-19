@@ -1,26 +1,120 @@
 import ConcertCard from "@/components/ConcertCard";
 import FilterCard from "@/components/FilterCard";
 import Head from "next/head";
-import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase/firebase";
 import { UserAuth } from "@/context/AuthContext";
+import filterCard from "@/components/FilterCard";
 
-function Concerts({screenWidth}) {
-    const [concerts,setConcerts] = useState([])
-  
-
-    const {user} = UserAuth()
+function Concerts({ screenWidth }) {
+    const [concerts, setConcerts] = useState([]);
+    const [filteredConcerts, setFilteredConcerts] = useState([]);
+    const [filterAvailable, setFilterAvailable] = useState(false);
+    const { user } = UserAuth();
 
     useEffect(() => {
         async function getConcertData() {
             const concertsData = await getDocs(collection(db, "concerts"));
             setConcerts(concertsData.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         }
+
         getConcertData();
     }, []);
 
-   
+    async function getConcertFilterData(concertFilter) {
+        console.log(concertFilter);
+        const genre = concertFilter.cGenre;
+        const cPriceLowNumber = parseInt(concertFilter.cPriceLow);
+        const cPriceHighNumber = parseInt(concertFilter.cPriceHigh);
+        try {
+            const concertRef = collection(db, "concerts");
+            const filteredConcertsArr = [];
+            if (genre.length !== 0 && genre !== "Any" && !isNaN(cPriceLowNumber) && !isNaN(cPriceHighNumber)) {
+                console.log("ALL FILTERS");
+
+                const q = query(
+                    concertRef,
+                    where("genre", "==", genre),
+                    where("price", ">=", cPriceLowNumber),
+                    where("price", "<=", cPriceHighNumber)
+                );
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    filteredConcertsArr.push(doc.data());
+                    setFilteredConcerts(filteredConcertsArr);
+                });
+                setFilterAvailable(true);
+            } else if (genre === "Any" && !isNaN(cPriceLowNumber) && !isNaN(cPriceHighNumber)) {
+                console.log("ALL FILTERS (ANY)");
+
+                const q = query(concertRef, where("price", ">=", cPriceLowNumber), where("price", "<=", cPriceHighNumber));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    filteredConcertsArr.push(doc.data());
+                    setFilteredConcerts(filteredConcertsArr);
+                });
+                setFilterAvailable(true);
+            } else if (genre.length !== 0 && genre !== "Any" && isNaN(cPriceLowNumber) && isNaN(cPriceHighNumber)) {
+                console.log("ONLY GENRE");
+
+                const q = query(concertRef, where("genre", "==", genre));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    filteredConcertsArr.push(doc.data());
+                    setFilteredConcerts(filteredConcertsArr);
+                });
+                setFilterAvailable(true);
+            } else if (genre === "Any" && isNaN(cPriceLowNumber) && isNaN(cPriceHighNumber)) {
+                console.log("ONLY GENRE (ANY)");
+
+                setFilteredConcerts(concerts);
+                setFilterAvailable(false);
+            } else if (genre.length !== 0 && genre !== "Any" && !isNaN(cPriceLowNumber) && isNaN(cPriceHighNumber)) {
+                console.log("GENRE AND LOWPRICE");
+
+                const q = query(concertRef, where("genre", "==", genre), where("price", ">=", cPriceLowNumber));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    filteredConcertsArr.push(doc.data());
+                    setFilteredConcerts(filteredConcertsArr);
+                });
+                setFilterAvailable(true);
+            } else if (genre === "Any" && !isNaN(cPriceLowNumber) && isNaN(cPriceHighNumber)) {
+                console.log("GENRE AND LOWPRICE (ANY)");
+
+                const q = query(concertRef, where("price", ">=", cPriceLowNumber));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    filteredConcertsArr.push(doc.data());
+                    setFilteredConcerts(filteredConcertsArr);
+                });
+                setFilterAvailable(true);
+            } else if (genre.length !== 0 && genre !== "Any" && isNaN(cPriceLowNumber) && !isNaN(cPriceHighNumber)) {
+                console.log("GENRE AND HIGHPRICE");
+
+                const q = query(concertRef, where("genre", "==", genre), where("price", "<=", cPriceHighNumber));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    filteredConcertsArr.push(doc.data());
+                    setFilteredConcerts(filteredConcertsArr);
+                });
+                setFilterAvailable(true);
+            } else if (genre === "Any" && isNaN(cPriceLowNumber) && !isNaN(cPriceHighNumber)) {
+                console.log("GENRE AND HIGHPRICE (ANY)");
+
+                const q = query(concertRef, where("price", "<=", cPriceHighNumber));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    filteredConcertsArr.push(doc.data());
+                    setFilteredConcerts(filteredConcertsArr);
+                });
+                setFilterAvailable(true);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
     return (
         <>
@@ -47,15 +141,15 @@ function Concerts({screenWidth}) {
                     </div>
                 </div>
                 <div data-aos="fade-up" data-aos-offset="200" data-aos-once="false">
-                    <FilterCard screenWidth={screenWidth} />
+                    <FilterCard screenWidth={screenWidth} onGetConcertFilterData={getConcertFilterData} />
                 </div>
+
                 <div className="mt-8 p-4 flex justify-center items-center" data-aos="fade-up" data-aos-offset="200" data-aos-once="false">
-                    <ConcertCard screenWidth={screenWidth} concertsData={concerts} />
+                    <ConcertCard screenWidth={screenWidth} concertsData={!filterAvailable ? concerts : filteredConcerts} />
                 </div>
             </div>
         </>
     );
 }
 
-Concerts.theme = "light";
 export default Concerts;
