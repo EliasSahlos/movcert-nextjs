@@ -14,6 +14,7 @@ export default function App({ Component, pageProps }) {
     const [screenWidth, setScreenWidth] = useState(0);
 
     const AuthRequired = ["/account"];
+    const AdminPanel = ["/admin-panel"];
     const router = useRouter();
 
     useEffect(() => {
@@ -39,16 +40,34 @@ export default function App({ Component, pageProps }) {
     return (
         <>
             <AuthContextProvider>
-                <HeaderBar />
-                {AuthRequired.includes(router.pathname) ? (
+                {AdminPanel.includes(router.pathname) ? (
                     <>
-                        <ProtectedRoute>
-                            <Component {...pageProps} screenWidth={screenWidth} />
-                        </ProtectedRoute>
+                        {AuthRequired.includes(router.pathname) ? (
+                            <>
+                                <ProtectedRoute>
+                                    <Component {...pageProps} screenWidth={screenWidth} />
+                                </ProtectedRoute>
+                            </>
+                        ) : (
+                            <>
+                                <Component {...pageProps} screenWidth={screenWidth} />
+                            </>
+                        )}
                     </>
                 ) : (
                     <>
-                        <Component {...pageProps} screenWidth={screenWidth} />
+                        <HeaderBar />
+                        {AuthRequired.includes(router.pathname) ? (
+                            <>
+                                <ProtectedRoute>
+                                    <Component {...pageProps} screenWidth={screenWidth} />
+                                </ProtectedRoute>
+                            </>
+                        ) : (
+                            <>
+                                <Component {...pageProps} screenWidth={screenWidth} />
+                            </>
+                        )}
                     </>
                 )}
             </AuthContextProvider>

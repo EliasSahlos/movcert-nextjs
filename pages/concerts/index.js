@@ -1,16 +1,15 @@
 import ConcertCard from "@/components/ConcertCard";
+import FilteredConcertCard from "@/components/FilteredConcertCard";
 import FilterCard from "@/components/FilterCard";
 import Head from "next/head";
 import { collection, doc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase/firebase";
 import { UserAuth } from "@/context/AuthContext";
-import filterCard from "@/components/FilterCard";
 
 function Concerts({ screenWidth }) {
     const [concerts, setConcerts] = useState([]);
     const [filteredConcerts, setFilteredConcerts] = useState([]);
-    const [filterAvailable, setFilterAvailable] = useState(false);
     const { user } = UserAuth();
 
     useEffect(() => {
@@ -27,9 +26,9 @@ function Concerts({ screenWidth }) {
         const genre = concertFilter.cGenre;
         const cPriceLowNumber = parseInt(concertFilter.cPriceLow);
         const cPriceHighNumber = parseInt(concertFilter.cPriceHigh);
+
         try {
             const concertRef = collection(db, "concerts");
-            const filteredConcertsArr = [];
             if (genre.length !== 0 && genre !== "Any" && !isNaN(cPriceLowNumber) && !isNaN(cPriceHighNumber)) {
                 console.log("ALL FILTERS");
 
@@ -40,31 +39,25 @@ function Concerts({ screenWidth }) {
                     where("price", "<=", cPriceHighNumber)
                 );
                 const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => {
-                    filteredConcertsArr.push(doc.data());
-                    setFilteredConcerts(filteredConcertsArr);
-                });
-                setFilterAvailable(true);
+                querySnapshot.forEach((doc) => {});
             } else if (genre === "Any" && !isNaN(cPriceLowNumber) && !isNaN(cPriceHighNumber)) {
                 console.log("ALL FILTERS (ANY)");
 
                 const q = query(concertRef, where("price", ">=", cPriceLowNumber), where("price", "<=", cPriceHighNumber));
                 const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => {
-                    filteredConcertsArr.push(doc.data());
-                    setFilteredConcerts(filteredConcertsArr);
-                });
-                setFilterAvailable(true);
+                querySnapshot.forEach((doc) => {});
             } else if (genre.length !== 0 && genre !== "Any" && isNaN(cPriceLowNumber) && isNaN(cPriceHighNumber)) {
                 console.log("ONLY GENRE");
 
                 const q = query(concertRef, where("genre", "==", genre));
                 const querySnapshot = await getDocs(q);
+                const newFilteredConcerts = [];
                 querySnapshot.forEach((doc) => {
-                    filteredConcertsArr.push(doc.data());
-                    setFilteredConcerts(filteredConcertsArr);
+                    let data = doc.data();
+                    data.id = doc.id;
+                    newFilteredConcerts.push(data);
                 });
-                setFilterAvailable(true);
+                setFilteredConcerts(newFilteredConcerts)
             } else if (genre === "Any" && isNaN(cPriceLowNumber) && isNaN(cPriceHighNumber)) {
                 console.log("ONLY GENRE (ANY)");
 
@@ -75,47 +68,31 @@ function Concerts({ screenWidth }) {
 
                 const q = query(concertRef, where("genre", "==", genre), where("price", ">=", cPriceLowNumber));
                 const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => {
-                    filteredConcertsArr.push(doc.data());
-                    setFilteredConcerts(filteredConcertsArr);
-                });
-                setFilterAvailable(true);
+                querySnapshot.forEach((doc) => {});
             } else if (genre === "Any" && !isNaN(cPriceLowNumber) && isNaN(cPriceHighNumber)) {
                 console.log("GENRE AND LOWPRICE (ANY)");
 
                 const q = query(concertRef, where("price", ">=", cPriceLowNumber));
                 const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => {
-                    filteredConcertsArr.push(doc.data());
-                    setFilteredConcerts(filteredConcertsArr);
-                });
-                setFilterAvailable(true);
+                querySnapshot.forEach((doc) => {});
             } else if (genre.length !== 0 && genre !== "Any" && isNaN(cPriceLowNumber) && !isNaN(cPriceHighNumber)) {
                 console.log("GENRE AND HIGHPRICE");
 
                 const q = query(concertRef, where("genre", "==", genre), where("price", "<=", cPriceHighNumber));
                 const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => {
-                    filteredConcertsArr.push(doc.data());
-                    setFilteredConcerts(filteredConcertsArr);
-                });
-                setFilterAvailable(true);
+                querySnapshot.forEach((doc) => {});
             } else if (genre === "Any" && isNaN(cPriceLowNumber) && !isNaN(cPriceHighNumber)) {
                 console.log("GENRE AND HIGHPRICE (ANY)");
 
                 const q = query(concertRef, where("price", "<=", cPriceHighNumber));
                 const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => {
-                    filteredConcertsArr.push(doc.data());
-                    setFilteredConcerts(filteredConcertsArr);
-                });
-                setFilterAvailable(true);
+                querySnapshot.forEach((doc) => {});
             }
         } catch (error) {
             console.log(error);
         }
     }
-    
+
     return (
         <>
             <Head>
@@ -145,7 +122,11 @@ function Concerts({ screenWidth }) {
                 </div>
 
                 <div className="mt-8 p-4 flex justify-center items-center" data-aos="fade-up" data-aos-offset="200" data-aos-once="false">
-                    <ConcertCard screenWidth={screenWidth} concertsData={!filterAvailable ? concerts : filteredConcerts} />
+                    {filteredConcerts.length === 0 ? (
+                        <ConcertCard screenWidth={screenWidth} concertsData={concerts} />
+                    ) : (
+                        <FilteredConcertCard screenWidth={screenWidth} concertsData={filteredConcerts} />
+                    )}
                 </div>
             </div>
         </>

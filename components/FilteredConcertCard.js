@@ -3,9 +3,8 @@ import { useState } from "react";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
 
-function ConcertCard({ screenWidth, concertsData }) {
-
-    console.log('NO FILTERS',concertsData);
+function FilteredConcertCard({ screenWidth, concertsData }) {
+    console.log('FILTERED',concertsData);
     return (
         <>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4" data-aos="fade-up">
@@ -32,4 +31,4 @@ function ConcertCard({ screenWidth, concertsData }) {
     );
 }
 
-export default ConcertCard;
+export default FilteredConcertCard;
