@@ -8,12 +8,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyA6yqCfcCwC6dX9FAxD0Hu34VNd4qszt1g",
-    authDomain: "movcert-next.firebaseapp.com",
-    projectId: "movcert-next",
-    storageBucket: "movcert-next.appspot.com",
-    messagingSenderId: "936498731572",
-    appId: "1:936498731572:web:d39e32f6b0f035439f8861",
+    apiKey: process.env.NEXT_PUBLIC_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
 // Initialize Firebase
