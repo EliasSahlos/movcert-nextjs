@@ -7,7 +7,7 @@ import MoneyIcon from "@mui/icons-material/AttachMoney";
 import { useEffect, useState } from "react";
 import { UserAuth } from "@/context/AuthContext";
 import { arrayUnion, updateDoc, doc, onSnapshot, getDoc, arrayRemove, deleteDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { db } from "../../firebase/firebase";
 import Link from "next/link";
 import { Concert_One } from "next/font/google";
 

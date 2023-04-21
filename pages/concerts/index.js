@@ -1,6 +1,6 @@
-import ConcertCard from "@/components/ConcertCard";
-import FilteredConcertCard from "@/components/FilteredConcertCard";
-import FilterCard from "@/components/FilterCard";
+import ConcertCard from "@/components/Concerts/ConcertCard";
+import FilteredConcertCard from "@/components/Concerts/FilteredConcertCard";
+import FilterCard from "@/components/Concerts/Filters";
 import Head from "next/head";
 import {collection, getDocs, query, where} from "firebase/firestore";
 import {useEffect, useState} from "react";

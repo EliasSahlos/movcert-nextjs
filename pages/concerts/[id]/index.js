@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { db } from "../../../firebase/firebase";
 import Head from "next/head";
 import Image from "next/image";
-import ConcertInfo from "@/components/ConcertInfo";
+import ConcertInfo from "@/components/Concerts/ConcertInfo";
 import { UserAuth } from "@/context/AuthContext";
 import {data} from "autoprefixer";
 
