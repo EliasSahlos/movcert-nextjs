@@ -16,7 +16,7 @@ function Login() {
         setError("");
         try {
             await logIn(email, password);
-            router.back()
+            router.push('/')
         } catch (error) {
             console.log(error);
             setError(error.message);

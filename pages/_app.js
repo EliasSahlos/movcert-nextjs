@@ -1,16 +1,16 @@
 import HeaderBar from "@/components/HeaderBar";
 import "@/styles/globals.css";
 import "../styles/mouse-scroll-icon.css";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { ThemeProvider, useTheme } from "next-themes";
-import { AuthContextProvider } from "@/context/AuthContext";
+import {ThemeProvider, useTheme} from "next-themes";
+import {AuthContextProvider} from "@/context/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
-export default function App({ Component, pageProps }) {
-    const { theme, setTheme } = useTheme();
+export default function App({Component, pageProps}) {
+    const {theme, setTheme} = useTheme();
     const [screenWidth, setScreenWidth] = useState(0);
 
     const AuthRequired = ["/account"];
@@ -37,6 +37,7 @@ export default function App({ Component, pageProps }) {
         };
     }, []);
 
+
     return (
         <>
             <AuthContextProvider>
@@ -45,27 +46,27 @@ export default function App({ Component, pageProps }) {
                         {AuthRequired.includes(router.pathname) ? (
                             <>
                                 <ProtectedRoute>
-                                    <Component {...pageProps} screenWidth={screenWidth} />
+                                    <Component {...pageProps} screenWidth={screenWidth}/>
                                 </ProtectedRoute>
                             </>
                         ) : (
                             <>
-                                <Component {...pageProps} screenWidth={screenWidth} />
+                                <Component {...pageProps} screenWidth={screenWidth}/>
                             </>
                         )}
                     </>
                 ) : (
                     <>
-                        <HeaderBar />
+                        <HeaderBar/>
                         {AuthRequired.includes(router.pathname) ? (
                             <>
                                 <ProtectedRoute>
-                                    <Component {...pageProps} screenWidth={screenWidth} />
+                                    <Component {...pageProps} screenWidth={screenWidth}/>
                                 </ProtectedRoute>
                             </>
                         ) : (
                             <>
-                                <Component {...pageProps} screenWidth={screenWidth} />
+                                <Component {...pageProps} screenWidth={screenWidth}/>
                             </>
                         )}
                     </>
