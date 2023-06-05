@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function FilterCard({ screenWidth, onGetConcertFilterData }) {
+function FilterCard({ screenWidth, onGetConcertFilterData: onGetMovieFilterData }) {
     const [cTitle, setCTitle] = useState("");
     const [cGenre, setCGenre] = useState("Any");
     const [cPriceLow, setCPriceLow] = useState("");
@@ -8,7 +8,7 @@ function FilterCard({ screenWidth, onGetConcertFilterData }) {
 
     function handleFilterSubmit(e) {
         e.preventDefault();
-        onGetConcertFilterData({ cGenre: cGenre, cPriceLow: cPriceLow, cPriceHigh: cPriceHigh });
+        onGetMovieFilterData({ cGenre: cGenre, cPriceLow: cPriceLow, cPriceHigh: cPriceHigh });
     }
 
     function handlePriceValueKey(event) {
@@ -24,7 +24,7 @@ function FilterCard({ screenWidth, onGetConcertFilterData }) {
                 {screenWidth < 768 ? (
                     <div className="flex justify-center items-center">
                         <div className=" block w-[550px] p-8 mt-[150px] border rounded-lg shadow-md bg-white z-10 abovesm:w-[550px] md:grid grid-cols-4 gap-4 w-[800px]">
-                            <p className="mb-2 text-[16px] font-bold text-black">Music Genre</p>
+                            <p className="mb-2 text-[16px] font-bold text-black">Movie Genre</p>
                             <select
                                 className="col-span-2 border-2 border-[##ced4da] h-[50px] p-2 w-full outline-none rounded shadow-sm focus:border-[#f3c07a]"
                                 name="cGenre"
@@ -54,7 +54,7 @@ function FilterCard({ screenWidth, onGetConcertFilterData }) {
                                 value={cPriceHigh}
                                 onKeyDown={handlePriceValueKey}
                                 onChange={(e) => setCPriceHigh(e.target.value)}
-                                placeholder="100+ $"
+                                placeholder="10+ $"
                                 className="border-2 border-[##ced4da] h-[50px] p-2 w-full outline-none rounded shadow-sm focus:border-[#f3c07a] "
                             />
                             <div className="flex justify-center items-center mt-6">
@@ -65,7 +65,7 @@ function FilterCard({ screenWidth, onGetConcertFilterData }) {
                 ) : (
                     <div className="flex justify-center items-center">
                         <div className="w-[1200px] p-8 mt-[150px] border rounded-lg shadow-md bg-white z-10 grid grid-cols-6 gap-4 w-[800px]">
-                            <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Music Genre</p>
+                            <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Movie Genre</p>
                             <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Price - Low</p>
                             <p className="col-span-2 mb-2 text-[16px] font-bold text-black">Price - High</p>
                             <select
