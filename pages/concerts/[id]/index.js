@@ -40,7 +40,7 @@ function SpecificConcert({ id }) {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
-    
+    console.log(concertData)
     return (
         <>
             <Head>

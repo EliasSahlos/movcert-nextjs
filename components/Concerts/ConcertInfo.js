@@ -4,6 +4,7 @@ import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import EmptyHeartIcon from "@mui/icons-material/FavoriteBorder";
 import FilledHeartIcon from "@mui/icons-material/Favorite";
 import MoneyIcon from "@mui/icons-material/AttachMoney";
+import AvailableSeats from "@mui/icons-material/LocalActivity";
 import { useEffect, useState } from "react";
 import { UserAuth } from "@/context/AuthContext";
 import { arrayUnion, updateDoc, doc, onSnapshot, getDoc, arrayRemove, deleteDoc } from "firebase/firestore";
@@ -91,7 +92,7 @@ function ConcertInfo({ concertData, concertID, onBookATicketData }) {
             console.log(error);
         }
     }
-    
+
     return (
         <>
             {screenWidth < 768 ? (
@@ -112,6 +113,19 @@ function ConcertInfo({ concertData, concertID, onBookATicketData }) {
                         <p className="mt-2 ">
                             <ConfirmationNumberIcon /> <span className="text-gray-600">Total Seats : {concertData.totalSeats}</span>{" "}
                         </p>
+                        <p className="mt-2 ">
+                            <AvailableSeats /> <span className="text-gray-600">Available Seats : {concertData.availableSeats}</span>
+                        </p>
+                        <p className="mt-2 ">
+                            <MoneyIcon /> <span className="text-gray-600">Price : {concertData.price}</span>
+                        </p>
+                        {concertData.availableSeats < 100 ? (
+                            <div class="mt-4 bg-cyan-100 border border-cyan-400 text-cyan-700 py-3 rounded relative shadow-md" role="alert">
+                                <span class="block sm:inline">Few Tickets Remaining! </span>
+                            </div>
+                        ) : (
+                            ""
+                        )}
                         <p>
                             {user?.email ? (
                                 <Link href={`${concertID}` + "/checkout"}>
@@ -152,8 +166,18 @@ function ConcertInfo({ concertData, concertID, onBookATicketData }) {
                             <ConfirmationNumberIcon /> <span className="text-gray-600">Total Seats : {concertData.totalSeats}</span>
                         </p>
                         <p className="mt-2 ">
+                            <AvailableSeats /> <span className="text-gray-600">Available Seats : {concertData.availableSeats}</span>
+                        </p>
+                        <p className="mt-2 ">
                             <MoneyIcon /> <span className="text-gray-600">Price : {concertData.price}</span>
                         </p>
+                        {concertData.availableSeats < 100 ? (
+                            <div class="mt-4 bg-cyan-100 border border-cyan-400 text-cyan-700 py-3 rounded relative shadow-md" role="alert">
+                                <span class="block sm:inline">Few Tickets Remaining! </span>
+                            </div>
+                        ) : (
+                            ""
+                        )}
                         <p>
                             {user?.email ? (
                                 <Link href={`${concertID}` + "/checkout"}>
@@ -163,9 +187,9 @@ function ConcertInfo({ concertData, concertID, onBookATicketData }) {
                                 </Link>
                             ) : (
                                 <>
-                                <button className=" bg-[#f7d5a6] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 cursor-not-allowed">
-                                    Book A Ticket
-                                </button>
+                                    <button className=" bg-[#f7d5a6] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 cursor-not-allowed">
+                                        Book A Ticket
+                                    </button>
                                 </>
                             )}
 
