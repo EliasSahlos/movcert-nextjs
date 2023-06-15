@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { UserAuth } from "@/context/AuthContext";
 import { db } from "../firebase/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -9,11 +9,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import FestivalIcon from "@mui/icons-material/Festival";
 import TicketIcon from "@mui/icons-material/ConfirmationNumber";
 import BookedConcertInfoModal from "@/components/Modal/BookedConcertInfoModal";
+import uuid from "react-uuid";
 
 function Account() {
     const [savedConcerts, setSavedConcerts] = useState([]);
     const [bookedConcerts, setBookedConcerts] = useState([]);
     const [username, setUsername] = useState([]);
+    const [selectedConcert, setSelectedConcert] = useState(null);
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const { user } = UserAuth();
 
@@ -47,8 +49,14 @@ function Account() {
         getBookedConcertsData();
     }, [user?.email, isOverlayOpen]);
 
-    function onGetOverlayData(data){
-        setIsOverlayOpen(data)
+    function handleOpenModal(concert) {
+        setSelectedConcert(concert);
+        setIsOverlayOpen(true);
+    }
+
+    function handleCloseModal() {
+        setSelectedConcert(null);
+        setIsOverlayOpen(false);
     }
 
     return (
@@ -59,6 +67,7 @@ function Account() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+
             <div className="h-[550px] bg-cover custom-img" data-aos="fade">
                 <div className="flex items-center justify-center">
                     <div className="absolute top-0 bottom-0 right-0 left-0 bg-gradient-to-b from-black h-[140px]" />
@@ -108,11 +117,11 @@ function Account() {
                     ))}
                 </div>
             </div>
+
             <div className="p-4">
                 <h1 className="text-[30px] font" data-aos="fade-up">
                     Booked Concerts
                 </h1>
-
                 <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 gap-6">
                     {bookedConcerts?.map((concert) => (
                         <div key={concert.id}>
@@ -124,12 +133,9 @@ function Account() {
                                     alt="broken-img"
                                     className="rounded h-auto max-w-full shadow-xl"
                                     data-aos="fade-up"
-                                    onClick={() => setIsOverlayOpen(true)}
+                                    onClick={() => handleOpenModal(concert)}
                                 />
                             </div>
-                            {isOverlayOpen && (
-                               <BookedConcertInfoModal concert={concert} onGetOverlayData={onGetOverlayData}/>
-                            )}
                             <h1 className="text-center mt-2" data-aos="fade-up">
                                 {concert.title}
                             </h1>
@@ -137,6 +143,7 @@ function Account() {
                     ))}
                 </div>
             </div>
+            {selectedConcert && <BookedConcertInfoModal concert={selectedConcert} onGetOverlayData={handleCloseModal} />}
         </>
     );
 }

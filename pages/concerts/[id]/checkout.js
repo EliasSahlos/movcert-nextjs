@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {db} from "../../../firebase/firebase";
 import {UserAuth} from "@/context/AuthContext";
 import Image from "next/image";
+import uuid from "react-uuid";
 
 export async function getServerSideProps(router) {
     const idObj = router.query;
@@ -54,10 +55,12 @@ function Checkout({id}) {
     async function handleBookingSubmit(e) {
         e.preventDefault();
         try {
+            const uniqueID = uuid()
             const concertRef = doc(db, "users", `${user?.email}`); //Add concert to users bookedConcerts
             await updateDoc(concertRef, {
                 bookedConcerts: arrayUnion({
                     id: id,
+                    uid: uniqueID,
                     title: concertData.title,
                     concertCover: concertData.concertCover,
                     place: concertData.place,
@@ -65,7 +68,7 @@ function Checkout({id}) {
                     finalPrice: concertData.price * ticketsNumber,
                 }),
             });
-            const concertRefMinus = doc(db, "concerts", id)
+            const concertRefMinus = doc(db, "concerts", id) //Decrements availableSeats field by ticket Number
             await updateDoc(concertRefMinus, {
                 availableSeats: concertData.availableSeats - ticketsNumber
             })
@@ -205,7 +208,7 @@ function Checkout({id}) {
                                                     <p className="mt-4">
                                                         <span
                                                             className="text-lg font-bold">Total Seats Remaining</span> :{" "}
-                                                        {concertData.totalSeats}
+                                                        {concertData.availableSeats}
                                                     </p>
                                                     {user?.email ? (
                                                         <button
