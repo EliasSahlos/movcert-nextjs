@@ -32,12 +32,12 @@ function FilterCard({ screenWidth, onGetConcertFilterData: onGetMovieFilterData 
                                 onChange={(e) => setCGenre(e.target.value)}
                             >
                                 <option value="Any">Any</option>
-                                <option value="Pop">Pop</option>
-                                <option value="Hip-Hop">Hip-Hop</option>
-                                <option value="Rock">Rock</option>
-                                <option value="Metal">Metal</option>
+                                <option value="Pop">Adventure</option>
+                                <option value="Hip-Hop">Drama</option>
+                                <option value="Rock">Comedy</option>
+                                <option value="Metal">Documentary</option>
                             </select>
-                            <p className="mb-2 text-[16px] font-bold text-black">Price - Low</p>
+                            <p className="mb-2 mt-2 text-[16px] font-bold text-black">Price - Low</p>
                             <input
                                 type="text"
                                 name="Search"
@@ -47,7 +47,7 @@ function FilterCard({ screenWidth, onGetConcertFilterData: onGetMovieFilterData 
                                 placeholder="1 $"
                                 className=" border-2 border-[##ced4da] h-[50px] p-2 w-full outline-none rounded shadow-sm focus:border-[#f3c07a] "
                             />
-                            <p className="mb-2 text-[16px] font-bold text-black">Price - High</p>
+                            <p className="mb-2 mt-2 text-[16px] font-bold text-black">Price - High</p>
                             <input
                                 type="text"
                                 name="Search"
@@ -61,7 +61,7 @@ function FilterCard({ screenWidth, onGetConcertFilterData: onGetMovieFilterData 
                                 <button className=" bg-[#ffba5a] text-white w-[120px] h-[50px] rounded-full shadow-md ">Set Filters</button>
                             </div>
                         </div>
-                    </div>  
+                    </div>
                 ) : (
                     <div className="flex justify-center items-center">
                         <div className="w-[1200px] p-8 mt-[150px] border rounded-lg shadow-md bg-white z-10 grid grid-cols-6 gap-4 w-[800px]">
@@ -75,10 +75,10 @@ function FilterCard({ screenWidth, onGetConcertFilterData: onGetMovieFilterData 
                                 onChange={(e) => setCGenre(e.target.value)}
                             >
                                 <option value="Any">Any</option>
-                                <option value="Pop">Pop</option>
-                                <option value="Hip-Hop">Hip-Hop</option>
-                                <option value="Rock">Rock</option>
-                                <option value="Metal">Metal</option>
+                                <option value="Pop">Adventure</option>
+                                <option value="Hip-Hop">Drama</option>
+                                <option value="Rock">Comedy</option>
+                                <option value="Metal">Documentary</option>
                             </select>
                             <input
                                 type="text"

@@ -19,7 +19,7 @@ export async function getServerSideProps(router) {
 
 function Checkout({ id }) {
     const [screenWidth, setScreenWidth] = useState(0);
-    const [concertData, setConcertData] = useState([]);
+    const [movieData, setMovieData] = useState([]);
     const [ticketsNumber, setTicketsNumber] = useState("");
 
     const { user } = UserAuth();
@@ -30,13 +30,13 @@ function Checkout({ id }) {
             setScreenWidth(window.innerWidth);
         }
 
-        function getConcertData() {
-            onSnapshot(doc(db, "concerts", id), (doc) => {
-                setConcertData(doc.data());
+        function getMovieData() {
+            onSnapshot(doc(db, "movies", id), (doc) => {
+                setMovieData(doc.data());
             });
         }
 
-        getConcertData();
+        getMovieData();
         handleResize();
         window.addEventListener("resize", handleResize);
         return () => {
@@ -54,18 +54,18 @@ function Checkout({ id }) {
     async function handleBookingSubmit(e) {
         e.preventDefault();
         try {
-            const concertRef = doc(db, "users", `${user?.email}`);
-            await updateDoc(concertRef, {
-                bookedConcerts: arrayUnion({
+            const movieRef = doc(db, "users", `${user?.email}`);
+            await updateDoc(movieRef, {
+                bookedMovies: arrayUnion({
                     id: id,
-                    title: concertData.title,
-                    concertCover: concertData.concertCover,
-                    place: concertData.place,
+                    title: movieData.title,
+                    movieCover: movieData.movieCover,
+                    place: movieData.place,
                     numberOfTickets: ticketsNumber,
-                    finalPrice: concertData.price * ticketsNumber,
+                    finalPrice: movieData.price * ticketsNumber,
                 }),
             });
-            router.push("/concerts/" + id + "/checkout-success");
+            router.push("/movies/" + id + "/checkout-success");
         } catch (error) {
             console.log(error);
         }
@@ -94,7 +94,7 @@ function Checkout({ id }) {
                                             <div>
                                                 <div className="flex justify-center items-center">
                                                     <Image
-                                                        src={concertData.concertCover}
+                                                        src={movieData.movieCover}
                                                         width={250}
                                                         height={20}
                                                         alt="broken-img"
@@ -103,16 +103,16 @@ function Checkout({ id }) {
                                                 </div>
                                                 <div className="mt-2 text-center ">
                                                     <p className="mt-2">
-                                                        <span className=" font-bold">Title</span> : {concertData.title}
+                                                        <span className=" font-bold">Title</span> : {movieData.title}
                                                     </p>
                                                     <p className="mt-2">
-                                                        <span className=" font-bold">Place</span> : {concertData.place}
+                                                        <span className=" font-bold">Place</span> : {movieData.place}
                                                     </p>
                                                     <p className="mt-2">
-                                                        <span className=" font-bold">Ticket Price</span> : {concertData.price}
+                                                        <span className=" font-bold">Ticket Price</span> : {movieData.price}
                                                     </p>
                                                     <p className="mt-2">
-                                                        <span className=" font-bold">Total Seats Remaining</span> : {concertData.totalSeats}
+                                                        <span className=" font-bold">Total Seats Remaining</span> : {movieData.totalSeats}
                                                     </p>
                                                     <p className="mt-8">
                                                         <span className="text-lg ">Tickets</span> :
@@ -129,7 +129,7 @@ function Checkout({ id }) {
                                                     </p>
                                                     <p className="text-lg mt-6">Final Price</p>
                                                     <p>
-                                                        <span className="text-3xl font-bold">{concertData.price * ticketsNumber}</span> €
+                                                        <span className="text-3xl font-bold">{movieData.price * ticketsNumber}</span> €
                                                     </p>
                                                     <button className=" bg-[#ffba5a] text-white w-[140px] h-[50px] mt-6 rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">
                                                         Book A Ticket
@@ -153,8 +153,8 @@ function Checkout({ id }) {
                                             <div className="grid grid-cols-2 gap-2">
                                                 <div>
                                                     <Image
-                                                        src={concertData.concertCover}
-                                                        width={270}
+                                                        src={movieData.movieCover}
+                                                        width={200}
                                                         height={20}
                                                         alt="broken-img"
                                                         className="mt-2"
@@ -174,22 +174,22 @@ function Checkout({ id }) {
                                                     </p>
                                                     <p className="text-lg mt-6">Final Price</p>
                                                     <p>
-                                                        <span className="text-3xl font-bold">{concertData.price * ticketsNumber}</span> €
+                                                        <span className="text-3xl font-bold">{movieData.price * ticketsNumber}</span> €
                                                     </p>
                                                 </div>
                                                 <div className="mt-2 ">
                                                     <p className="mt-4">
-                                                        <span className="text-lg font-bold">Title</span> : {concertData.title}
+                                                        <span className="text-lg font-bold">Title</span> : {movieData.title}
                                                     </p>
                                                     <p className="mt-4">
-                                                        <span className="text-lg font-bold">Place</span> : {concertData.place}
+                                                        <span className="text-lg font-bold">Place</span> : {movieData.place}
                                                     </p>
                                                     <p className="mt-4">
-                                                        <span className="text-lg font-bold">Ticket Price</span> : {concertData.price}
+                                                        <span className="text-lg font-bold">Ticket Price</span> : {movieData.price}
                                                     </p>
                                                     <p className="mt-4">
                                                         <span className="text-lg font-bold">Total Seats Remaining</span> :{" "}
-                                                        {concertData.totalSeats}
+                                                        {movieData.totalSeats}
                                                     </p>
                                                     {user?.email ? (
                                                         <button className="mt-[160px] ml-[48px] bg-[#ffba5a] text-white w-[140px] h-[50px] rounded-full shadow-md scale-100 hover:scale-105 ease-in duration-100 ">

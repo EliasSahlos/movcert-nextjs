@@ -37,7 +37,7 @@ function FilterCard({ screenWidth, onGetConcertFilterData }) {
                                 <option value="Rock">Rock</option>
                                 <option value="Metal">Metal</option>
                             </select>
-                            <p className="mb-2 text-[16px] font-bold text-black">Price - Low</p>
+                            <p className="mb-2 mt-2 text-[16px] font-bold text-black">Price - Low</p>
                             <input
                                 type="text"
                                 name="Search"
@@ -47,7 +47,7 @@ function FilterCard({ screenWidth, onGetConcertFilterData }) {
                                 placeholder="1 $"
                                 className=" border-2 border-[##ced4da] h-[50px] p-2 w-full outline-none rounded shadow-sm focus:border-[#f3c07a] "
                             />
-                            <p className="mb-2 text-[16px] font-bold text-black">Price - High</p>
+                            <p className="mb-2 mt-2 text-[16px] font-bold text-black">Price - High</p>
                             <input
                                 type="text"
                                 name="Search"
